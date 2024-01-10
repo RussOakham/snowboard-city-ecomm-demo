@@ -18,14 +18,25 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@graphql-eslint/eslint-plugin": "^3.20.1",
     "@tanstack/eslint-plugin-query": "^5.17.7",
     "@types/node": "^20",
     "@types/react": "^18.2.47",
     "@types/react-dom": "^18.2.18",
+    "@typescript-eslint/eslint-plugin": "^6.18.1",
+    "@typescript-eslint/parser": "^6.18.1",
     "autoprefixer": "^10.4.16",
     "eslint": "^8.56.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-typescript": "^17.1.0",
     "eslint-config-next": "14.0.4",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-graphql": "^4.0.0",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
     "postcss": "^8.4.33",
+    "prettier": "^3.1.1",
+    "prettier-plugin-tailwind": "^2.2.12",
+    "prettier-plugin-tailwind-css": "^1.5.0",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.3.3"
   }

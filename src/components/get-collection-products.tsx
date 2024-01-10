@@ -1,7 +1,9 @@
-import { getCollectionProducts, getProducts } from "@/lib/shopify"
+import {
+    getProducts
+} from "@/lib/shopify"
 import { Product } from "@/lib/shopify/types"
 
-const Product = ({ product }: { product: Product }) => {
+const ProductComponent = ({ product }: { product: Product }) => {
     return (
         <li key={product.id}>{product.title}</li>
     )
@@ -23,7 +25,7 @@ export const GetCollectionProducts = async () => {
             <h2 className="mb-3 text-2xl font-semibold">Snowboards</h2>
             <ul>
                 {products.map((product) => (
-                    <Product key={product.id} product={product} />
+                    <ProductComponent key={product.id} product={product} />
                 ))}
             </ul>
         </div>

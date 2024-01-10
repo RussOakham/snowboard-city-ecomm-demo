@@ -1,9 +1,9 @@
 'use client'
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import { ReactQueryStreamedHydration } from '@tanstack/react-query-next-experimental'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import React from "react"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { ReactQueryStreamedHydration } from '@tanstack/react-query-next-experimental'
 
 interface ProviderProps {
     children: React.ReactNode
@@ -25,7 +25,7 @@ export default function Providers({ children }: ProviderProps) {
             <ReactQueryStreamedHydration>
                 {children}
             </ReactQueryStreamedHydration>
-            {<ReactQueryDevtools initialIsOpen={false} />}
+            <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
     )
 }
