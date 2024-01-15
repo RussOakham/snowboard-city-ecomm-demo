@@ -1,4 +1,4 @@
-import { getProducts } from '@/lib/shopify'
+import { getProducts } from '@/lib/shopify/actions/get-products'
 import { Product } from '@/lib/shopify/types'
 
 const ProductComponent = ({ product }: { product: Product }) => {
