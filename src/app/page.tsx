@@ -1,5 +1,3 @@
-import { Suspense } from 'react'
-
 import { GetCollectionProducts } from '@/components/get-collection-products'
 
 export const runtime = 'edge'
@@ -8,9 +6,7 @@ export const runtime = 'edge'
 export default async function Home() {
 	return (
 		<main className="flex min-h-screen flex-col items-center justify-between p-24">
-			<Suspense fallback={<p>Loading...</p>}>
-				<GetCollectionProducts />
-			</Suspense>
+			<GetCollectionProducts />
 		</main>
 	)
 }

@@ -1,5 +1,8 @@
+import { Suspense } from 'react'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+
+import NavBar from '@/components/nav-bar'
 
 import Providers from './providers/providers'
 
@@ -18,9 +21,12 @@ export default function RootLayout({
 	children: React.ReactNode
 }) {
 	return (
-		<html lang="en">
+		<html lang="en" suppressHydrationWarning>
 			<body className={inter.className}>
-				<Providers>{children}</Providers>
+				<NavBar />
+				<Providers>
+					<Suspense fallback={<p>Loading...</p>}>{children}</Suspense>
+				</Providers>
 			</body>
 		</html>
 	)
