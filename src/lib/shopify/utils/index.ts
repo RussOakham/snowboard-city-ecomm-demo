@@ -1,5 +1,6 @@
 import { HIDDEN_PRODUCT_TAG } from '../constants'
-import { Connection, Image, Product, ShopifyProduct } from '../types'
+import { Product, ShopifyProduct } from '../types/product'
+import { Connection, Image } from '../types/shopify'
 
 export const removeEdgesAndNodes = <T>(array: Connection<T>): T[] => {
 	return array.edges.map((edge) => edge?.node)

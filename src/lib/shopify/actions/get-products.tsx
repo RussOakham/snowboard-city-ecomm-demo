@@ -2,7 +2,7 @@ import { shopifyFetch } from '@/lib/shopify'
 
 import { TAGS } from '../constants'
 import { getProductsQuery } from '../queries/product'
-import { Product, ShopifyProductsOperation } from '../types'
+import { Product, ShopifyProductsOperation } from '../types/product'
 import { removeEdgesAndNodes, reshapeProducts } from '../utils'
 
 export async function getProducts({
