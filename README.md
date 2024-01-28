@@ -13,3 +13,13 @@ NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN="quickstart-6cc63160.myshopify.com"
 
 SHOPIFY_REVALIDATION_SECRET=""
 ```
+
+Website Examples:
+
+Skateshop:
+[https://skateshop.sadmn.com/](https://skateshop.sadmn.com/)
+[https://github.com/sadmann7/skateshop](https://github.com/sadmann7/skateshop)
+
+Taxonomy:
+[https://tx.shadcn.com/](https://tx.shadcn.com/)
+[https://github.com/shadcn-ui/taxonomy/tree/main](https://github.com/shadcn-ui/taxonomy/tree/main)
