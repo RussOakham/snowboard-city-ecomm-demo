@@ -1,8 +1,7 @@
-'use client'
-
 import Link from 'next/link'
 
 import { siteConfig } from '@/config/site'
+import { getMenu } from '@/lib/shopify/actions/get-menu'
 import { MainNavItem } from '@/types'
 
 import { Icons } from '../../icons'
@@ -16,12 +15,15 @@ import {
 } from '../../ui/navigation-menu'
 
 import { ListItem } from './nav-list-item'
+import NavMenuLink from './nav-menu-link'
 
 interface MainNavProps {
 	items?: MainNavItem[]
 }
 
-export default function MainNav({ items }: MainNavProps) {
+export default async function MainNav({ items }: MainNavProps) {
+	const menu = await getMenu('product-categories')
+
 	return (
 		<div className="hidden gap-6 lg:flex">
 			<Link href="/" className="hidden items-center space-x-2 lg:flex">
@@ -73,6 +75,9 @@ export default function MainNav({ items }: MainNavProps) {
 							</NavigationMenuContent>
 						</NavigationMenuItem>
 					) : null}
+					{menu.map((item) => {
+						return <NavMenuLink key={item.title} item={item} />
+					})}
 				</NavigationMenuList>
 			</NavigationMenu>
 		</div>

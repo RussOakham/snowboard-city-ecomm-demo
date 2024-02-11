@@ -1,6 +1,6 @@
 export type Menu = {
 	title: string
-	path: string
+	href: string
 }
 
 export type ShopifyMenuOperation = {

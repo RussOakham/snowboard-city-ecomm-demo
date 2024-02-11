@@ -1,6 +1,6 @@
 import { SHOPIFY_GRAPHQL_API_ENDPOINT } from './constants'
 
-const domain = `https://${process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN!}`
+export const domain = `https://${process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN!}`
 const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`
 const key = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN!
 
