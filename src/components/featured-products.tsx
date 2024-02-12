@@ -7,6 +7,7 @@ import ProductCard from './cards/product-card'
 export const FeaturedProducts = () => {
 	// Collections that start with `hidden-*` are hidden from the search page.
 	// Update to use Featured Products Query - create new collection in Shopify?
+	// Add maximum turn number - 8?
 	const { data: products, isLoading, isError } = useGetProductsQuery()
 
 	if (isLoading) return <p>Loading...</p>
