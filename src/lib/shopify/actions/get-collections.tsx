@@ -5,7 +5,7 @@ import { getCollectionProductsQuery } from '../queries/collection'
 import { Product, ShopifyCollectionProductsOperation } from '../types/product'
 import { removeEdgesAndNodes, reshapeProducts } from '../utils'
 
-export async function getCollectionProducts({
+export async function getCollection({
 	collection,
 	reverse,
 	sortKey,
