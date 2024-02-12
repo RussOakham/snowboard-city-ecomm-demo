@@ -18,6 +18,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from '../ui/card'
+import { Skeleton } from '../ui/skeleton'
 
 interface CardActionButtonProps {
 	isAddedToCart: boolean
@@ -47,6 +48,7 @@ const ProductCard = ({
 }: ProductCardProps) => {
 	// Change to useTransition with server action? Or keep same with React Query
 	const [isAddingToCart, setIsAddingToCart] = useState(false)
+	const [imageLoaded, setImageLoaded] = useState(false)
 
 	function mockPromise() {
 		return new Promise((resolve) => {
@@ -66,16 +68,20 @@ const ProductCard = ({
 				<CardHeader className="border-b p-0">
 					<AspectRatio ratio={4 / 3}>
 						{product.images?.length ? (
-							<Image
-								src={
-									product.images[0]?.url ?? '/images/product-placeholder.webp'
-								}
-								alt={product.images[0]?.altText ?? product.title}
-								className="object-cover"
-								sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
-								fill
-								loading="lazy"
-							/>
+							<>
+								<Image
+									src={
+										product.images[0]?.url ?? '/images/product-placeholder.webp'
+									}
+									alt={product.images[0]?.altText ?? product.title}
+									className={`${!imageLoaded ? 'opacity-0' : 'opacity-100'} object-cover`}
+									sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
+									fill
+									loading="lazy"
+									onLoadingComplete={() => setImageLoaded(true)}
+								/>
+								{!imageLoaded && <Skeleton className="h-full w-full" />}
+							</>
 						) : (
 							<PlaceholderImage className="rounded-none" asChild />
 						)}
