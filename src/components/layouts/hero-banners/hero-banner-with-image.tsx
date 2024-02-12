@@ -14,7 +14,10 @@ const HeroBannerWithImage = ({
 	imgSrc,
 }: HeroBannerWithImageProps) => {
 	return (
-		<Shell className="h-[350px] max-w-6xl p-0 md:h-[500px] md:p-0 lg:h-[750px]">
+		<Shell
+			variant="zero-padding"
+			className="h-[350px] md:h-[500px]  lg:h-[750px]"
+		>
 			<Image
 				src={imgSrc}
 				alt={imgAlt}

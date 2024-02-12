@@ -105,7 +105,7 @@ const config = {
 			},
 		},
 	},
-	plugins: [require('tailwindcss-animate'), require('tailwindcss-full-bleed')],
+	plugins: [require('tailwindcss-animate')],
 } satisfies Config
 
 export default config
