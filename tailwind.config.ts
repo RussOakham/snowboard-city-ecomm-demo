@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss'
+import { fontFamily } from 'tailwindcss/defaultTheme'
 
 const config = {
 	purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
@@ -58,6 +59,34 @@ const config = {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)',
+			},
+			fontSize: {
+				'tremor-label': ['0.75rem', { lineHeight: '1rem' }],
+				'tremor-default': ['0.875rem', { lineHeight: '1.25rem' }],
+				'tremor-title': ['1.125rem', { lineHeight: '1.75rem' }],
+				'tremor-metric': ['1.875rem', { lineHeight: '2.25rem' }],
+			},
+			fontFamily: {
+				sans: ['var(--font-sans)', ...fontFamily.sans],
+				mono: ['var(--font-mono)', ...fontFamily.mono],
+				heading: ['var(--font-heading)', ...fontFamily.sans],
+			},
+			typography: {
+				DEFAULT: {
+					css: {
+						h1: {
+							fontFamily: 'Cal Sans',
+						},
+						h2: {
+							fontFamily: 'Cal Sans',
+						},
+						h3: {
+							fontFamily: 'Cal Sans',
+						},
+						'blockquote p:first-of-type::before': { content: 'none' },
+						'blockquote p:first-of-type::after': { content: 'none' },
+					},
+				},
 			},
 			keyframes: {
 				'accordion-down': {
