@@ -29,7 +29,6 @@ export type ShopifyProduct = {
 	title: string
 	description: string
 	descriptionHtml: string
-	productType: string
 	options: ProductOption[]
 	priceRange: {
 		maxVariantPrice: Money
@@ -40,7 +39,6 @@ export type ShopifyProduct = {
 	images: Connection<Image>
 	seo: SEO
 	tags: string[]
-	totalInventory: number
 	updatedAt: string
 }
 

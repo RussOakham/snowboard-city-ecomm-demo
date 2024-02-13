@@ -52,10 +52,10 @@
 		"eslint-config-airbnb-typescript": "^17.1.0",
 		"eslint-config-next": "14.1.0",
 		"eslint-config-prettier": "^9.1.0",
-		"eslint-plugin-graphql": "^4.0.0",
 		"eslint-plugin-simple-import-sort": "^10.0.0",
 		"postcss": "^8.4.33",
 		"prettier": "^3.2.4",
+		"ts-to-zod": "^3.7.0",
 		"typescript": "^5.3.3"
 	}
 }
