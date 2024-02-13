@@ -1,4 +1,5 @@
 import { HIDDEN_PRODUCT_TAG } from '../constants'
+import { Cart, ShopifyCart } from '../types/cart'
 import { Product, ShopifyProduct } from '../types/product'
 import { Connection, Image } from '../types/shopify'
 
@@ -20,6 +21,20 @@ export const reshapeImages = (
 			altText: image.altText || `${productTitle} - ${filename}`,
 		}
 	})
+}
+
+export const reshapeCart = (cart: ShopifyCart): Cart => {
+	if (!cart.cost?.totalTaxAmount) {
+		cart.cost.totalTaxAmount = {
+			amount: '0.00',
+			currencyCode: 'GBP',
+		}
+	}
+
+	return {
+		...cart,
+		lines: removeEdgesAndNodes(cart.lines),
+	}
 }
 
 export const reshapeProduct = (

@@ -1,8 +1,8 @@
 import { domain, shopifyFetch } from '@/lib/shopify'
 
-import { TAGS } from '../constants'
-import { getMenuQuery } from '../queries/menu'
-import { Menu, ShopifyMenuOperation } from '../types/menu'
+import { TAGS } from '../../constants'
+import { getMenuQuery } from '../../queries/menu'
+import { Menu, ShopifyMenuOperation } from '../../types/menu'
 
 export async function getMenu(handle: string): Promise<Menu[]> {
 	const res = await shopifyFetch<ShopifyMenuOperation>({

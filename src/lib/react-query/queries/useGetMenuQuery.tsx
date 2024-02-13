@@ -1,6 +1,6 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 
-import { getMenu } from '@/lib/shopify/actions/get-menu'
+import { getMenu } from '@/lib/shopify/actions/queries/get-menu'
 
 export const useGetMenuQuery = (handle: string) => {
 	const query = useSuspenseQuery({
