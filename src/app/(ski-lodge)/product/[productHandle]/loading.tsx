@@ -1,3 +1,5 @@
+import { Shell } from '@/components/layouts/shells/shell'
+
 export default function ProductPage() {
-	return <div>Loading Product Page...</div>
+	return <Shell className="pb-12 md:pb-14">Loading Product Page...</Shell>
 }

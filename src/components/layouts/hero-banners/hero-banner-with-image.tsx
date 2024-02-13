@@ -15,7 +15,7 @@ const HeroBannerWithImage = ({
 }: HeroBannerWithImageProps) => {
 	return (
 		<Shell
-			variant="zero-padding"
+			variant="zero-vertical-padding"
 			className="h-[350px] md:h-[500px]  lg:h-[750px]"
 		>
 			<Image
