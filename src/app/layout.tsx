@@ -1,13 +1,11 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 
+import { fontHeading, fontMono, fontSans } from '@/lib/fonts'
 import { cn } from '@/lib/utils'
 
 import Providers from './providers/providers'
 
 import './globals.css'
-
-const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
 	title: 'Snowboard City',
@@ -20,12 +18,15 @@ interface LayoutProps {
 
 export default function RootLayout({ children }: LayoutProps) {
 	return (
-		<html lang="en" suppressHydrationWarning>
+		<html lang="en">
 			<body
 				className={cn(
 					'min-h-screen bg-background font-sans antialiased',
-					inter.className,
+					fontSans.variable,
+					fontMono.variable,
+					fontHeading.variable,
 				)}
+				suppressHydrationWarning
 			>
 				<Providers>{children}</Providers>
 			</body>
