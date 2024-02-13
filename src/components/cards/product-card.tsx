@@ -64,7 +64,7 @@ const ProductCard = ({
 			className={cn('size-full overflow-hidden rounded-sm', className)}
 			{...props}
 		>
-			<Link aria-label={product.title} href={`/product/${product.id}`}>
+			<Link aria-label={product.title} href={`/product/${product.handle}`}>
 				<CardHeader className="border-b p-0">
 					<AspectRatio ratio={4 / 3}>
 						{product.images?.length ? (
@@ -78,7 +78,7 @@ const ProductCard = ({
 									sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
 									fill
 									loading="lazy"
-									onLoadingComplete={() => setImageLoaded(true)}
+									onLoad={() => setImageLoaded(true)}
 								/>
 								{!imageLoaded && <Skeleton className="h-full w-full" />}
 							</>
@@ -89,7 +89,7 @@ const ProductCard = ({
 				</CardHeader>
 				<span className="sr-only">{product.title}</span>
 			</Link>
-			<Link href={`/product/${product.id}`} tabIndex={0}>
+			<Link href={`/product/${product.handle}`} tabIndex={0}>
 				<CardContent className="space-y-1.5 p-4">
 					<CardTitle className="line-clamp-1">{product.title}</CardTitle>
 					<CardDescription className="line-clamp-1">
@@ -119,7 +119,7 @@ const ProductCard = ({
 							Add to cart
 						</Button>
 						<Link
-							href={`/preview/product/${product.id}`}
+							href={`/preview/product/${product.handle}`}
 							title="Preview"
 							className={cn(
 								buttonVariants({

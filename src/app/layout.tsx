@@ -18,7 +18,7 @@ interface LayoutProps {
 
 export default function RootLayout({ children }: LayoutProps) {
 	return (
-		<html lang="en" suppressHydrationWarning>
+		<html lang="en">
 			<body
 				className={cn(
 					'min-h-screen bg-background font-sans antialiased',
@@ -26,6 +26,7 @@ export default function RootLayout({ children }: LayoutProps) {
 					fontMono.variable,
 					fontHeading.variable,
 				)}
+				suppressHydrationWarning
 			>
 				<Providers>{children}</Providers>
 			</body>
