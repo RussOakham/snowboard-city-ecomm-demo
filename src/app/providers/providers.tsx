@@ -15,7 +15,8 @@ export default function Providers({ children }: ProviderProps) {
 			new QueryClient({
 				defaultOptions: {
 					queries: {
-						staleTime: 1000 * 60 * 60 * 1, // 1 hour
+						// 1000 * 60 * 60 * 1, // 1 hour
+						staleTime: 0,
 						refetchOnReconnect: false,
 						refetchOnMount: false,
 					},

@@ -9,7 +9,8 @@ type ExtractVariables<T> = T extends { variables: object }
 	: never
 
 export async function shopifyFetch<T>({
-	cache = 'force-cache',
+	// change to force-cache for production
+	cache = 'no-cache',
 	headers,
 	query,
 	tags,
