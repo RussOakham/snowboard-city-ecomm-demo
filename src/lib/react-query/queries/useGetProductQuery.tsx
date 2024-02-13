@@ -1,7 +1,6 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 
 import { getProduct } from '@/lib/shopify/actions/get-product'
-import { Product } from '@/lib/shopify/types/product'
 
 export const useGetProductQuery = (handle: string) => {
 	const query = useSuspenseQuery({
@@ -9,5 +8,5 @@ export const useGetProductQuery = (handle: string) => {
 		queryFn: async () => getProduct(handle),
 	})
 
-	return [query.data as Product] as const
+	return [query.data] as const
 }
