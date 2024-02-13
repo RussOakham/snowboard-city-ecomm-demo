@@ -21,6 +21,13 @@ export function formatPrice(
 	}).format(Number(price))
 }
 
+export function toTitleCase(str: string) {
+	return str.replace(
+		/\w\S*/g,
+		(txt) => txt.charAt(0).toUpperCase() + txt.slice(1).toLowerCase(),
+	)
+}
+
 export function truncate(str: string, length: number) {
 	return str.length > length ? `${str.slice(0, length)}...` : str
 }

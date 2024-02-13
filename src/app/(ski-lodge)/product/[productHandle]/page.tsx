@@ -5,9 +5,16 @@ import { notFound } from 'next/navigation'
 import { Shell } from '@/components/layouts/shells/shell'
 import { Breadcrumbs } from '@/components/pagers/breadcrumbs'
 import { ProductImageCarousel } from '@/components/product-image-carousel'
+import { Rating } from '@/components/rating'
+import {
+	Accordion,
+	AccordionContent,
+	AccordionItem,
+	AccordionTrigger,
+} from '@/components/ui/accordion'
 import { Separator } from '@/components/ui/separator'
 import { useGetProductQuery } from '@/lib/react-query/queries/useGetProductQuery'
-import { formatPrice } from '@/lib/utils'
+import { formatPrice, toTitleCase } from '@/lib/utils'
 
 interface ProductPageProps {
 	params: {
@@ -17,6 +24,9 @@ interface ProductPageProps {
 
 export default function ProductPage({ params }: ProductPageProps) {
 	const [product] = useGetProductQuery(params.productHandle)
+
+	// Mock product rating as not included in vanilla shopify product data
+	const productRating = Math.floor(Math.random() * 5) + 1
 
 	if (!product) {
 		return notFound()
@@ -31,11 +41,11 @@ export default function ProductPage({ params }: ProductPageProps) {
 						href: '/products',
 					},
 					{
-						title: 'Category',
-						href: '/products/category',
+						title: `${toTitleCase(product.productType)}`,
+						href: `/products/${product.productType}`,
 					},
 					{
-						title: params.productHandle,
+						title: product.title,
 						href: `/products/${params.productHandle}`,
 					},
 				]}
@@ -54,6 +64,31 @@ export default function ProductPage({ params }: ProductPageProps) {
 					<p className="text-base text-muted-foreground">
 						{formatPrice(product.priceRange.maxVariantPrice.amount)}
 					</p>
+					<Separator className="mt-4 md:hidden" />
+					<p className="text-base text-muted-foreground">
+						{product.totalInventory} in stock
+					</p>
+					<div className="flex items-center justify-between">
+						<Rating rating={productRating} />
+					</div>
+					{/* Add to Cart Form */}
+					<Separator className="mt-4 md:hidden" />
+					<Accordion
+						type="single"
+						collapsible
+						className="w-full"
+						defaultValue="description"
+					>
+						<AccordionItem value="description" className="border-none">
+							<AccordionTrigger>Description</AccordionTrigger>
+							<AccordionContent>
+								{product.description.length > 0
+									? product.description
+									: 'No description is available for this product.'}
+							</AccordionContent>
+						</AccordionItem>
+					</Accordion>
+					<Separator className="md:hidden" />
 				</div>
 			</div>
 		</Shell>
