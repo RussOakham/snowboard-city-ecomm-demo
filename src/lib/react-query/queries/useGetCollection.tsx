@@ -13,7 +13,7 @@ export const useGetCollectionQuery = ({
 	reverse,
 	sortKey,
 }: UseGetCollectionQueryParams) => {
-	const { data, isLoading, isError, isSuccess } = useSuspenseQuery({
+	const query = useSuspenseQuery({
 		queryKey: ['collection', collection, reverse, sortKey],
 		queryFn: async () =>
 			getCollection({
@@ -23,5 +23,5 @@ export const useGetCollectionQuery = ({
 			}),
 	})
 
-	return { data, isLoading, isError, isSuccess }
+	return [query.data] as const
 }
