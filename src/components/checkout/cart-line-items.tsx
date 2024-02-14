@@ -8,6 +8,8 @@ import { Icons } from '../icons'
 import { ScrollArea } from '../ui/scroll-area'
 import { Separator } from '../ui/separator'
 
+import { UpdateCart } from './update-cart'
+
 interface CartLineItemsProps extends React.HTMLAttributes<HTMLDivElement> {
 	items: CartItem[]
 	isScrollable?: boolean
@@ -104,8 +106,7 @@ export function CartLineItems({
 									</div>
 								</div>
 								{isEditable ? (
-									// <UpdateCart cartLineItem={item} />
-									<div>Update Cart</div>
+									<UpdateCart cartLineItem={item} />
 								) : (
 									<div className="flex flex-col space-y-1 font-medium">
 										<span className="ml-auto line-clamp-1 text-sm">

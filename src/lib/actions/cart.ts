@@ -117,6 +117,7 @@ export async function updateItemQuantity(
 		await updateCart(cartId, [
 			{ id: lineId, merchandiseId: variantId, quantity },
 		])
+		revalidateTag(TAGS.cart)
 		return 'Item quantity updated'
 	} catch (e) {
 		return 'Error updating item quantity'

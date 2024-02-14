@@ -71,7 +71,7 @@ export function AddToCartForm({
 	const OutOfStockButton = (
 		<div className="flex items-center">
 			<Button
-				id={`${id}-decrement`}
+				id={`${id}-out-of-stock`}
 				type="button"
 				variant="outline"
 				size="icon"
