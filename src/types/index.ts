@@ -31,8 +31,6 @@ export type MainNavItem = NavItemWithOptionalChildren
 
 export type SidebarNavItem = NavItemWithChildren
 
-export interface StoredFile {
-	id: string
-	name: string
-	url: string
+export interface SearchParams {
+	[key: string]: string | string[] | undefined
 }

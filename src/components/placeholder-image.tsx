@@ -12,7 +12,7 @@ interface PlaceholderImageProps
 	asChild?: boolean
 }
 
-const PlaceholderImage = ({
+export const PlaceholderImage = ({
 	isSkeleton = false,
 	asChild = false,
 	className,
@@ -28,7 +28,6 @@ const PlaceholderImage = ({
 		>
 			<Skeleton
 				aria-label="Placeholder"
-				role="img"
 				aria-roledescription="placeholder"
 				className={cn(
 					'flex size-full items-center justify-center',
@@ -43,5 +42,3 @@ const PlaceholderImage = ({
 		</Comp>
 	)
 }
-
-export default PlaceholderImage

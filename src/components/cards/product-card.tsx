@@ -10,7 +10,7 @@ import { Product, ProductVariant } from '@/lib/shopify/types/product'
 import { catchError, cn } from '@/lib/utils'
 
 import { Icons } from '../icons'
-import PlaceholderImage from '../placeholder-image'
+import { PlaceholderImage } from '../placeholder-image'
 import { AspectRatio } from '../ui/aspect-ratio'
 import { Button, buttonVariants } from '../ui/button'
 import {
