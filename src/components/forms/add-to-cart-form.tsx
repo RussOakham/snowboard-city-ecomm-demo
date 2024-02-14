@@ -40,13 +40,12 @@ export function AddToCartForm({
 	const [isAddingToCart, startAddingToCart] = React.useTransition()
 	const searchParams = useSearchParams()
 
-	const defaultVariantId = variants.length === 1 ? variants[0]?.id : undefined
 	const variant = variants.find((v: ProductVariant) =>
 		v.selectedOptions.every(
 			(option) => option.value === searchParams.get(option.name.toLowerCase()),
 		),
 	)
-	const selectedVariantId = variant?.id ?? defaultVariantId
+	const selectedVariantId = variant?.id ?? variants[0]?.id
 
 	function onSubmit(data: Inputs) {
 		startAddingToCart(async () => {
