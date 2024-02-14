@@ -1,7 +1,7 @@
 import { shopifyFetch } from '@/lib/shopify'
 
-import { Cart, ShopifyAddToCartOperation } from '../../types/cart'
 import { addToCartMutation } from '../../mutations/cart'
+import { Cart, ShopifyAddToCartOperation } from '../../types/cart'
 import { reshapeCart } from '../../utils'
 
 export async function addToCart(
