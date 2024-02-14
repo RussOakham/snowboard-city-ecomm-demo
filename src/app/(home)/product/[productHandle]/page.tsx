@@ -43,7 +43,7 @@ export default function ProductPage({ params }: ProductPageProps) {
 					},
 					{
 						title: `${toTitleCase(product.productType)}`,
-						href: `/products/${product.productType}`,
+						href: `/categories/${product.productType}`,
 					},
 					{
 						title: product.title,

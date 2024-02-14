@@ -2,11 +2,11 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { MinusIcon, PlusIcon } from '@radix-ui/react-icons'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
-import { addItem, addItems } from '@/lib/actions/cart'
+import { addItems } from '@/lib/actions/cart'
 import { updateCartItemFormSchema } from '@/lib/shopify/schemas/cart.schema'
 import { ProductVariant } from '@/lib/shopify/types/product'
 import { catchError, cn } from '@/lib/utils'
@@ -37,9 +37,7 @@ export function AddToCartForm({
 	showBuyNow,
 }: AddToCartFormProps) {
 	const id = React.useId()
-	const router = useRouter()
 	const [isAddingToCart, startAddingToCart] = React.useTransition()
-	const [isBuyingNow, startBuyingNow] = React.useTransition()
 	const searchParams = useSearchParams()
 
 	const defaultVariantId = variants.length === 1 ? variants[0]?.id : undefined
@@ -123,7 +121,7 @@ export function AddToCartForm({
 												type="number"
 												inputMode="numeric"
 												min={0}
-												className="h-8 w-16 rounded-none border-x-0"
+												className="pointer-events-none h-8 w-16 rounded-none border-x-0 text-center"
 												{...field}
 												onChange={(e) => {
 													const { value } = e.target
@@ -153,37 +151,10 @@ export function AddToCartForm({
 							</Button>
 						</div>
 						<div className="flex items-center space-x-2.5">
-							{showBuyNow ? (
-								<Button
-									type="button"
-									aria-label="Buy now"
-									size="sm"
-									className="w-full"
-									onClick={() => {
-										startBuyingNow(async () => {
-											try {
-												await addItem(null, selectedVariantId)
-												router.push('/cart')
-											} catch (err) {
-												catchError(err)
-											}
-										})
-									}}
-									disabled={isBuyingNow}
-								>
-									{isBuyingNow ? (
-										<Icons.Spinner
-											className="mr-2 size-4 animate-spin"
-											aria-hidden="true"
-										/>
-									) : null}
-									Buy now
-								</Button>
-							) : null}
 							<Button
 								type="submit"
 								aria-label="Add to cart"
-								variant={showBuyNow ? 'outline' : 'default'}
+								variant="default"
 								size="sm"
 								className="w-full"
 								disabled={isAddingToCart}
