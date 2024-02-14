@@ -29,7 +29,7 @@ export function formatPrice(
 		notation?: Intl.NumberFormatOptions['notation']
 	} = {},
 ) {
-	const { currency = 'GBP', notation = 'compact' } = options
+	const { currency = 'GBP', notation = 'standard' } = options
 
 	return new Intl.NumberFormat('en-GB', {
 		style: 'currency',
