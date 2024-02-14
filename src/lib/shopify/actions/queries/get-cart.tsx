@@ -1,8 +1,8 @@
 import { shopifyFetch } from '@/lib/shopify'
 
-import { Cart, ShopifyCartOperation } from '../../types/cart'
-import { getCartQuery } from '../../queries/cart'
 import { TAGS } from '../../constants'
+import { getCartQuery } from '../../queries/cart'
+import { Cart, ShopifyCartOperation } from '../../types/cart'
 import { reshapeCart } from '../../utils'
 
 export async function getCart(cartId: string): Promise<Cart | undefined> {

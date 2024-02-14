@@ -25,9 +25,16 @@ export const reshapeImages = (
 
 export const reshapeCart = (cart: ShopifyCart): Cart => {
 	if (!cart.cost?.totalTaxAmount) {
-		cart.cost.totalTaxAmount = {
-			amount: '0.00',
-			currencyCode: 'GBP',
+		return {
+			...cart,
+			lines: removeEdgesAndNodes(cart.lines),
+			cost: {
+				...cart.cost,
+				totalTaxAmount: {
+					amount: '0.00',
+					currencyCode: 'GBP',
+				},
+			},
 		}
 	}
 

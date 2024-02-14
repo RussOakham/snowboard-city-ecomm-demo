@@ -1,7 +1,7 @@
 import { shopifyFetch } from '@/lib/shopify'
 
-import { Cart, ShopifyCreateCartOperation } from '../../types/cart'
 import { createCartMutation } from '../../mutations/cart'
+import { Cart, ShopifyCreateCartOperation } from '../../types/cart'
 import { reshapeCart } from '../../utils'
 
 export async function createCart(): Promise<Cart> {
