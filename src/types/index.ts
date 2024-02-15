@@ -31,6 +31,12 @@ export type MainNavItem = NavItemWithOptionalChildren
 
 export type SidebarNavItem = NavItemWithChildren
 
+export interface Option {
+	label: string
+	value: string
+	icon?: React.ComponentType<{ className?: string }>
+}
+
 export interface SearchParams {
 	[key: string]: string | string[] | undefined
 }

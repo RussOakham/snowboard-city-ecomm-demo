@@ -4,11 +4,20 @@ import {
 	PageHeaderDescription,
 	PageHeaderHeading,
 } from '@/components/page-header'
+import { Products } from '@/components/products'
 import { SearchParams } from '@/types'
 
 interface ProductsPageProps {
 	searchParams: SearchParams
 }
+
+const categories = [
+	'snowboards',
+	'ski-jackets',
+	'goggles',
+	'snowboard-boots',
+	'accessories',
+]
 
 export default function ProductsPage({ searchParams }: ProductsPageProps) {
 	console.log(searchParams)
@@ -21,6 +30,7 @@ export default function ProductsPage({ searchParams }: ProductsPageProps) {
 					Buy the best products from our store
 				</PageHeaderDescription>
 			</PageHeader>
+			<Products categories={categories} />
 		</Shell>
 	)
 }
