@@ -1,16 +1,29 @@
 'use client'
 
 import { useCallback, useEffect, useId, useState, useTransition } from 'react'
+import { ChevronDownIcon } from '@radix-ui/react-icons'
 import { type Route } from 'next'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 import { useDebounce } from '@/hooks/use-debounce'
+import { sorting } from '@/lib/shopify/constants'
 import { Product } from '@/lib/shopify/types/product'
-import { toTitleCase } from '@/lib/utils'
+import { cn, toTitleCase } from '@/lib/utils'
 import { Option } from '@/types'
 
+import ProductCard from './cards/product-card'
+import { PaginationButton } from './pagers/pagination-button'
 import { Button } from './ui/button'
 import { Card, CardDescription } from './ui/card'
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuLabel,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from './ui/dropdown-menu'
+import { Input } from './ui/input'
 import { Label } from './ui/label'
 import { Separator } from './ui/separator'
 import {
@@ -25,14 +38,12 @@ import { Switch } from './ui/switch'
 import { Combobox } from './combobox'
 
 interface ProductsProps {
-	// products: Product[]
-	// pageCount: number
-	// category?: Product['productType']
+	products: Product[]
+	pageCount: number
 	categories?: Product['productType'][]
-	// storePageCount?: number
 }
 
-export function Products({ categories }: ProductsProps) {
+export function Products({ products, categories, pageCount }: ProductsProps) {
 	const id = useId()
 	const router = useRouter()
 	const pathname = usePathname()
@@ -40,8 +51,11 @@ export function Products({ categories }: ProductsProps) {
 	const [isPending, startTransition] = useTransition()
 
 	// searchParams
+	const page = searchParams?.get('page') ?? '1'
+	const perPage = searchParams?.get('per_page') ?? '8'
 	const inStock = searchParams?.get('inStock') ?? 'true'
 	const categoriesParam = searchParams?.get('categories')
+	const sort = searchParams?.get('sort') ?? 'latest-desc'
 
 	// Create Query String
 	const createQueryString = useCallback(
@@ -159,6 +173,31 @@ export function Products({ categories }: ProductsProps) {
 										setSliderTouched(true)
 									}}
 								/>
+								<div className="flex items-center space-x-4">
+									<Input
+										type="number"
+										inputMode="numeric"
+										min={0}
+										max={priceRange[1]}
+										value={priceRange[0]}
+										onChange={(e) => {
+											const value = Number(e.target.value)
+											setPriceRange([value, priceRange[1]])
+										}}
+									/>
+									<span className="text-muted-foreground">-</span>
+									<Input
+										type="number"
+										inputMode="numeric"
+										min={priceRange[0]}
+										max={2000}
+										value={priceRange[1]}
+										onChange={(e) => {
+											const value = Number(e.target.value)
+											setPriceRange([priceRange[0], value])
+										}}
+									/>
+								</div>
 							</Card>
 							{categories?.length ? (
 								<Card className="space-y-4 rounded-lg p-3">
@@ -204,7 +243,61 @@ export function Products({ categories }: ProductsProps) {
 						</div>
 					</SheetContent>
 				</Sheet>
+				<DropdownMenu>
+					<DropdownMenuTrigger asChild>
+						<Button aria-label="Sort products" size="sm" disabled={isPending}>
+							Sort
+							<ChevronDownIcon className="ml-2 size-4" aria-hidden="true" />
+						</Button>
+					</DropdownMenuTrigger>
+					<DropdownMenuContent align="start" className="w-48">
+						<DropdownMenuLabel>Sort by</DropdownMenuLabel>
+						<DropdownMenuSeparator />
+						{sorting.map((sortItem) => (
+							<DropdownMenuItem
+								key={sortItem.slug}
+								className={cn(sortItem.slug === sort && 'bg-accent font-bold')}
+								onClick={() => {
+									startTransition(() => {
+										router.replace(
+											`${pathname}?${createQueryString({
+												sort: sortItem.slug,
+											})}` as Route,
+											{
+												scroll: false,
+											},
+										)
+									})
+								}}
+							>
+								{sortItem.title}
+							</DropdownMenuItem>
+						))}
+					</DropdownMenuContent>
+				</DropdownMenu>
 			</div>
+			{!isPending && !products.length ? (
+				<div className="max-w-s mx-auto flex flex-col space-y-1.5">
+					<h1 className="text-center text-2xl font-bold">No products found</h1>
+					<p className="text-center text-muted-foreground">
+						Try changing your filters, or check back later for new products
+					</p>
+				</div>
+			) : null}
+			<div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+				{products.map((product) => (
+					<ProductCard key={product.id} product={product} />
+				))}
+			</div>
+			{products.length ? (
+				<PaginationButton
+					pageCount={pageCount}
+					page={page}
+					perPage={perPage}
+					sort={sort}
+					createQueryString={createQueryString}
+				/>
+			) : null}
 		</section>
 	)
 }
