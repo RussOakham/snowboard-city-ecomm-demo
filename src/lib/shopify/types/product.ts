@@ -37,6 +37,8 @@ export type ShopifyProduct = {
 	variants: Connection<ProductVariant>
 	featuredImage: Image
 	images: Connection<Image>
+	productType: string
+	totalInventory: number
 	seo: SEO
 	tags: string[]
 	updatedAt: string

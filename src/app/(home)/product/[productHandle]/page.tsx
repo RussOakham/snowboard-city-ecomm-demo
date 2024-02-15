@@ -2,6 +2,7 @@
 
 import { notFound } from 'next/navigation'
 
+import { AddToCartForm } from '@/components/forms/add-to-cart-form'
 import { Shell } from '@/components/layouts/shells/shell'
 import { Breadcrumbs } from '@/components/pagers/breadcrumbs'
 import { ProductImageCarousel } from '@/components/product-image-carousel'
@@ -42,7 +43,7 @@ export default function ProductPage({ params }: ProductPageProps) {
 					},
 					{
 						title: `${toTitleCase(product.productType)}`,
-						href: `/products/${product.productType}`,
+						href: `/categories/${product.productType}`,
 					},
 					{
 						title: product.title,
@@ -71,7 +72,11 @@ export default function ProductPage({ params }: ProductPageProps) {
 					<div className="flex items-center justify-between">
 						<Rating rating={productRating} />
 					</div>
-					{/* Add to Cart Form */}
+					<AddToCartForm
+						variants={product.variants}
+						availableForSale={product.availableForSale}
+						showBuyNow
+					/>
 					<Separator className="mt-4 md:hidden" />
 					<Accordion
 						type="single"

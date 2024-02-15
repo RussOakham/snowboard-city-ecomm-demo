@@ -1,6 +1,6 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 
-import { getProducts } from '@/lib/shopify/actions/get-products'
+import { getProducts } from '@/lib/shopify/actions/queries/get-products'
 
 export const useGetProductsQuery = () => {
 	const query = useSuspenseQuery({

@@ -1,9 +1,12 @@
 import { shopifyFetch } from '@/lib/shopify'
 
-import { TAGS } from '../constants'
-import { getCollectionProductsQuery } from '../queries/collection'
-import { Product, ShopifyCollectionProductsOperation } from '../types/product'
-import { removeEdgesAndNodes, reshapeProducts } from '../utils'
+import { TAGS } from '../../constants'
+import { getCollectionProductsQuery } from '../../queries/collection'
+import {
+	Product,
+	ShopifyCollectionProductsOperation,
+} from '../../types/product'
+import { removeEdgesAndNodes, reshapeProducts } from '../../utils'
 
 export async function getCollection({
 	collection,

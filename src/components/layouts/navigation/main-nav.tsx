@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 import { siteConfig } from '@/config/site'
-import { getMenu } from '@/lib/shopify/actions/get-menu'
+import { getMenu } from '@/lib/shopify/actions/queries/get-menu'
 import { MainNavItem } from '@/types'
 
 import { Icons } from '../../icons'

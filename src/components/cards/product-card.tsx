@@ -1,13 +1,16 @@
-import { useState } from 'react'
+import { useState, useTransition } from 'react'
 import { CheckIcon, EyeOpenIcon, PlusIcon } from '@radix-ui/react-icons'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
+import { toast } from 'sonner'
 
-import { Product } from '@/lib/shopify/types/product'
-import { cn } from '@/lib/utils'
+import { addItem } from '@/lib/actions/cart'
+import { Product, ProductVariant } from '@/lib/shopify/types/product'
+import { catchError, cn } from '@/lib/utils'
 
 import { Icons } from '../icons'
-import PlaceholderImage from '../placeholder-image'
+import { PlaceholderImage } from '../placeholder-image'
 import { AspectRatio } from '../ui/aspect-ratio'
 import { Button, buttonVariants } from '../ui/button'
 import {
@@ -47,17 +50,16 @@ const ProductCard = ({
 	...props
 }: ProductCardProps) => {
 	// Change to useTransition with server action? Or keep same with React Query
-	const [isAddingToCart, setIsAddingToCart] = useState(false)
+	const searchParams = useSearchParams()
+	const [isAddingToCart, startAddingToCart] = useTransition()
 	const [imageLoaded, setImageLoaded] = useState(false)
 
-	function mockPromise() {
-		return new Promise((resolve) => {
-			setTimeout(() => {
-				resolve(console.log('added to cart'))
-				setIsAddingToCart(false)
-			}, 1000)
-		})
-	}
+	const productVariant = product.variants.find((v: ProductVariant) =>
+		v.selectedOptions.every(
+			(option) => option.value === searchParams.get(option.name.toLowerCase()),
+		),
+	)
+	const selectedVariantId = productVariant?.id ?? product.variants[0]?.id
 
 	return (
 		<Card
@@ -92,7 +94,7 @@ const ProductCard = ({
 			<Link href={`/product/${product.handle}`} tabIndex={0}>
 				<CardContent className="space-y-1.5 p-4">
 					<CardTitle className="line-clamp-1">{product.title}</CardTitle>
-					<CardDescription className="line-clamp-1">
+					<CardDescription className="line-clamp-1 md:h-5">
 						{product.description}
 					</CardDescription>
 				</CardContent>
@@ -104,11 +106,18 @@ const ProductCard = ({
 							aria-label="Add to cart"
 							size="sm"
 							className="h-8 w-full rounded-sm"
-							onClick={async () => {
-								setIsAddingToCart(true)
-								await mockPromise()
+							variant={product.availableForSale ? 'default' : 'destructive'}
+							onClick={() => {
+								startAddingToCart(async () => {
+									try {
+										await addItem(null, selectedVariantId)
+										toast.success(`${product.title} added to cart`)
+									} catch (err) {
+										catchError(err)
+									}
+								})
 							}}
-							disabled={isAddingToCart}
+							disabled={isAddingToCart || !product.availableForSale}
 						>
 							{isAddingToCart && (
 								<Icons.Spinner
@@ -116,7 +125,7 @@ const ProductCard = ({
 									aria-hidden="true"
 								/>
 							)}
-							Add to cart
+							{product.availableForSale ? 'Add to cart' : 'Out of stock'}
 						</Button>
 						<Link
 							href={`/preview/product/${product.handle}`}
@@ -138,11 +147,17 @@ const ProductCard = ({
 						aria-label={isAddedToCart ? 'Remove from cart' : 'Add to cart'}
 						size="sm"
 						className="h-8 w-full rounded-sm"
-						onClick={async () => {
-							setIsAddingToCart(true)
-							await mockPromise()
+						onClick={() => {
+							startAddingToCart(async () => {
+								try {
+									await addItem(null, selectedVariantId)
+									toast.success(`${product.title} added to cart`)
+								} catch (err) {
+									catchError(err)
+								}
+							})
 						}}
-						disabled={isAddingToCart}
+						disabled={isAddingToCart || !product.availableForSale}
 					>
 						{isAddingToCart ? (
 							<Icons.Spinner

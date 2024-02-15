@@ -1,7 +1,7 @@
 module.exports = {
 	root: true,
 	parser: '@typescript-eslint/parser',
-	plugins: ['@typescript-eslint', 'simple-import-sort', 'graphql'],
+	plugins: ['@typescript-eslint', 'simple-import-sort'],
 	extends: [
 		'next/core-web-vitals',
 		'plugin:@tanstack/eslint-plugin-query/recommended',
@@ -14,14 +14,6 @@ module.exports = {
 		'prettier',
 	],
 	overrides: [
-		{
-			files: ['*.graphql'],
-			parser: '@graphql-eslint/eslint-plugin',
-			plugins: ['@graphql-eslint'],
-			rules: {
-				'@graphql-eslint/known-type-names': 'error',
-			},
-		},
 		{
 			files: ['*.ts', '*.tsx'], // Your TypeScript files extension
 

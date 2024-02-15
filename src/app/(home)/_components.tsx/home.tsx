@@ -1,9 +1,12 @@
+import Link from 'next/link'
+
 import { FeaturedProducts } from '@/components/featured-products'
 import HeroBannerWithImage from '@/components/layouts/hero-banners/hero-banner-with-image'
 import { ContentSection } from '@/components/layouts/shells/content-section'
 import { Shell } from '@/components/layouts/shells/shell'
+import { Button } from '@/components/ui/button'
 
-const SkiLodge = () => {
+const Home = () => {
 	return (
 		<Shell variant="zero-vertical-padding" className="max-w-6xl">
 			<HeroBannerWithImage
@@ -17,6 +20,14 @@ const SkiLodge = () => {
 					Buy and sell snowboarding gear from independent brands and stores
 					around the world with ease
 				</p>
+				<div className="flex flex-wrap items-center justify-center gap-4">
+					<Button asChild>
+						<Link href="/products">
+							Buy now
+							<span className="sr-only">Buy now</span>
+						</Link>
+					</Button>
+				</div>
 			</HeroBannerWithImage>
 			<ContentSection
 				title="Featured products"
@@ -31,4 +42,4 @@ const SkiLodge = () => {
 	)
 }
 
-export default SkiLodge
+export default Home
