@@ -2,11 +2,24 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 
 import { getProducts } from '@/lib/shopify/actions/queries/get-products'
 
-export const useGetProductsQuery = () => {
-	const query = useSuspenseQuery({
-		queryKey: ['products'],
-		queryFn: async () => getProducts({}),
+export const useGetProductsQuery = ({
+	sortKey,
+	reverse,
+	query,
+}: {
+	sortKey?: string
+	reverse?: boolean
+	query?: string
+}) => {
+	const res = useSuspenseQuery({
+		queryKey: ['products', query, sortKey, reverse],
+		queryFn: async () =>
+			getProducts({
+				query,
+				sortKey,
+				reverse,
+			}),
 	})
 
-	return [query.data] as const
+	return [res.data] as const
 }
