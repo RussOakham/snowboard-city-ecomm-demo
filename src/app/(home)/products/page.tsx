@@ -1,5 +1,7 @@
 'use client'
 
+import { useCallback, useMemo } from 'react'
+
 import { Shell } from '@/components/layouts/shells/shell'
 import {
 	PageHeader,
@@ -9,6 +11,7 @@ import {
 import { Products } from '@/components/products'
 import { useGetProductsQuery } from '@/lib/react-query/queries/useGetProductsQuery'
 import { defaultSort, sorting } from '@/lib/shopify/constants'
+import { Product } from '@/lib/shopify/types/product'
 import { SearchParams } from '@/types'
 
 interface ProductsPageProps {
@@ -36,25 +39,61 @@ export default function ProductsPage({
 	const { sortKey, reverse } =
 		sorting.find((item) => item.slug === sort) ?? defaultSort
 
-	const inStockQuery = inStock ? `available:${inStock}` : `available:true`
-
 	const categoryQuery = category ? `product_type:${category}` : ''
 
-	const priceRangeQueryMin = price_range
-		? `price_range.min_variant_price.amount:>${price_range.split('-')[0]}`
-		: ''
-
-	const priceRangeQueryMax = price_range
-		? `price_range.min_variant_price.amount:<${price_range.split('-')[1]}`
-		: ''
-
-	const queryString = `${inStockQuery}${categoryQuery ? ` ${categoryQuery}` : ''}${priceRangeQueryMin ? ` ${priceRangeQueryMin}` : ''}${priceRangeQueryMax ? ` ${priceRangeQueryMax}` : ''}`
+	const queryString = categoryQuery
 
 	const [products] = useGetProductsQuery({
 		sortKey,
 		reverse,
 		query: queryString,
 	})
+
+	// Temporary client side filter, as Shopify doesn't support all $query parameters
+	// TODO: Refactor Shopify GraphQL query to accept filter params
+	const filterProducts = useCallback(
+		(productsData: Product[], inStockBool: boolean, priceRange: string) => {
+			let filteredProducts = productsData
+
+			if (inStockBool) {
+				filteredProducts = products.filter(
+					(product) => product.availableForSale,
+				)
+			}
+
+			if (!inStockBool) {
+				filteredProducts = products.filter(
+					(product) => !product.availableForSale,
+				)
+			}
+
+			const [min, max] = priceRange.split('-')
+			filteredProducts = filteredProducts.filter(
+				(product) =>
+					Number(product.priceRange.minVariantPrice.amount) >= Number(min) &&
+					Number(product.priceRange.minVariantPrice.amount) <= Number(max),
+			)
+
+			return filteredProducts
+		},
+		[products],
+	)
+
+	let inStockBool = true
+
+	if (inStock === 'false') {
+		inStockBool = false
+	}
+
+	let priceRange = '0-2000'
+
+	if (price_range) {
+		priceRange = price_range
+	}
+
+	const filteredProducts = useMemo(() => {
+		return filterProducts(products, inStockBool, priceRange)
+	}, [filterProducts, inStockBool, priceRange, products])
 
 	return (
 		<Shell>
@@ -64,7 +103,11 @@ export default function ProductsPage({
 					Buy the best products from our store
 				</PageHeaderDescription>
 			</PageHeader>
-			<Products products={products} categories={categories} pageCount={1} />
+			<Products
+				products={filteredProducts}
+				categories={categories}
+				pageCount={1}
+			/>
 			{modal}
 		</Shell>
 	)

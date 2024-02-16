@@ -233,7 +233,7 @@ export function Products({ products, categories, pageCount }: ProductsProps) {
 
 										setPriceRange([0, 2000])
 										setSelectedCategory(null)
-										setSliderTouched(false)
+										// setSliderTouched(false)
 									}}
 									disabled={isPending}
 								>
