@@ -35,8 +35,6 @@ export function PaginationButton({
 	const pathname = usePathname()
 	const [isPending, startTransition] = useTransition()
 
-	console.log(perPage)
-
 	// Memoize pagination range to avoid unnecessary re-renders
 	const paginationRange = useMemo(() => {
 		const delta = siblingCount + 2

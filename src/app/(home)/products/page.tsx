@@ -13,6 +13,7 @@ import { SearchParams } from '@/types'
 
 interface ProductsPageProps {
 	searchParams: SearchParams
+	modal: React.ReactNode
 }
 
 const categories = [
@@ -24,13 +25,16 @@ const categories = [
 	'accessories',
 ]
 
-export default function ProductsPage({ searchParams }: ProductsPageProps) {
+export default function ProductsPage({
+	searchParams,
+	modal,
+}: ProductsPageProps) {
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	const { sort, category, inStock, price_range } = searchParams as {
 		[key: string]: string
 	}
 	const { sortKey, reverse } =
-		sorting.find((item) => item.slug === sort) || defaultSort
+		sorting.find((item) => item.slug === sort) ?? defaultSort
 
 	const inStockQuery = inStock ? `available:${inStock}` : `available:true`
 
@@ -61,6 +65,7 @@ export default function ProductsPage({ searchParams }: ProductsPageProps) {
 				</PageHeaderDescription>
 			</PageHeader>
 			<Products products={products} categories={categories} pageCount={1} />
+			{modal}
 		</Shell>
 	)
 }

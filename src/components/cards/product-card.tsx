@@ -1,5 +1,6 @@
 import { useState, useTransition } from 'react'
 import { CheckIcon, EyeOpenIcon, PlusIcon } from '@radix-ui/react-icons'
+import { Route } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
@@ -128,7 +129,7 @@ const ProductCard = ({
 							{product.availableForSale ? 'Add to cart' : 'Out of stock'}
 						</Button>
 						<Link
-							href={`/preview/product/${product.handle}`}
+							href={`/preview/product/${product.handle}` as Route}
 							title="Preview"
 							className={cn(
 								buttonVariants({
