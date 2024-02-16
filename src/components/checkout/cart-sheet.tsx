@@ -1,9 +1,11 @@
+'use client'
+
 import { type Route } from 'next'
-import { cookies } from 'next/headers'
 import Link from 'next/link'
 
+import { useGetCartQuery } from '@/lib/react-query/queries/useGetCartQuery'
 // import { useGetCartQuery } from '@/lib/react-query/queries/useGetCartQuery'
-import { getCart } from '@/lib/shopify/actions/queries/get-cart'
+// import { getCart } from '@/lib/shopify/actions/queries/get-cart'
 import { cn, formatPrice } from '@/lib/utils'
 
 import { Icons } from '../icons'
@@ -21,20 +23,12 @@ import {
 
 import { CartLineItems } from './cart-line-items'
 
-export async function CartSheet() {
-	const cartId = cookies().get('cartId')?.value
-	let cart
+interface CartSheetProps {
+	cartId: string
+}
 
-	// conflict due to use of next/headers
-	// const [data] = useGetCartQuery(cartId as string)
-
-	// if (data !== undefined) {
-	// 	cart = data
-	// }
-
-	if (cartId) {
-		cart = await getCart(cartId)
-	}
+export function CartSheet({ cartId }: CartSheetProps) {
+	const [cart] = useGetCartQuery(cartId)
 
 	return (
 		<Sheet>

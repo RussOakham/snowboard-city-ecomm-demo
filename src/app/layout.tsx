@@ -2,8 +2,7 @@ import type { Metadata } from 'next'
 
 import { fontHeading, fontMono, fontSans } from '@/lib/fonts'
 import { cn } from '@/lib/utils'
-
-import Providers from './providers/providers'
+import Providers from '@/providers/providers'
 
 import './globals.css'
 
