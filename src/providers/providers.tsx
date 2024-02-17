@@ -7,6 +7,9 @@ import { ReactQueryStreamedHydration } from '@tanstack/react-query-next-experime
 
 import { Toaster } from '@/components/ui/sonner'
 
+// Custom QueryClient implementation based upon following GH issue:
+// https://github.com/TanStack/query/issues/6116
+// Fixes bug where can get stuck in and infinite loop on initial render, as server and client query clients are not synced
 function makeQueryClient() {
 	return new QueryClient({
 		defaultOptions: {

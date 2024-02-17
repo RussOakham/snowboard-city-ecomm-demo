@@ -1,6 +1,6 @@
 import React from 'react'
 
-import SiteHeader from '@/components/layouts/site-header'
+import { SiteHeader } from '@/components/layouts/site-header'
 
 interface SkiLodgeLayoutProps
 	extends React.PropsWithChildren<{

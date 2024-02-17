@@ -4,6 +4,7 @@ import { type Route } from 'next'
 import Link from 'next/link'
 
 import { useGetCartQuery } from '@/lib/react-query/queries/useGetCartQuery'
+import { Cart } from '@/lib/shopify/types/cart'
 // import { useGetCartQuery } from '@/lib/react-query/queries/useGetCartQuery'
 // import { getCart } from '@/lib/shopify/actions/queries/get-cart'
 import { cn, formatPrice } from '@/lib/utils'
@@ -24,11 +25,11 @@ import {
 import { CartLineItems } from './cart-line-items'
 
 interface CartSheetProps {
-	cartId: string
+	cart: Cart
 }
 
-export function CartSheet({ cartId }: CartSheetProps) {
-	const [cart] = useGetCartQuery(cartId)
+export function CartSheet({ cart: initialCart }: CartSheetProps) {
+	const [cart] = useGetCartQuery(initialCart.id)
 
 	return (
 		<Sheet>

@@ -2,14 +2,16 @@ import { cookies } from 'next/headers'
 
 import { CartSheet } from '@/components/checkout/cart-sheet'
 import { siteConfig } from '@/config/site'
+import { getCart } from '@/lib/shopify/actions/queries/get-cart'
 
 import MainNav from '../navigation/main-nav'
 
-const SiteHeader = () => {
-	let cartId = cookies().get('cartId')?.value
+export async function SiteHeader() {
+	const cartId = cookies().get('cartId')?.value
+	let cart
 
-	if (!cartId) {
-		cartId = ''
+	if (cartId) {
+		cart = await getCart(cartId)
 	}
 
 	return (
@@ -18,12 +20,11 @@ const SiteHeader = () => {
 				<MainNav items={siteConfig.mainNav} />
 				<div className="flex flex-1 items-center justify-end space-x-4">
 					<nav className="flex items-center space-x-2">
-						<CartSheet cartId={cartId} />
+						{/* Refactor to display no cart static component if cartId is undefined */}
+						<CartSheet cart={cart} />
 					</nav>
 				</div>
 			</div>
 		</header>
 	)
 }
-
-export default SiteHeader
