@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/react'
 import type { Metadata } from 'next'
 
 import { fontHeading, fontMono, fontSans } from '@/lib/fonts'
@@ -27,7 +28,10 @@ export default function RootLayout({ children }: LayoutProps) {
 				)}
 				suppressHydrationWarning
 			>
-				<Providers>{children}</Providers>
+				<Providers>
+					{children}
+					<Analytics />
+				</Providers>
 			</body>
 		</html>
 	)
