@@ -6,11 +6,12 @@ import { usePathname } from 'next/navigation'
 import { ErrorCard } from '@/components/cards/error-card'
 import { Shell } from '@/components/layouts/shells/shell'
 
-interface ErrorPageProps {
-	error: Error & { digest?: string }
+interface ErrorProps {
+	error?: Error & { digest?: string }
+	reset?: () => void
 }
 
-export default function ErrorPage({ error }: ErrorPageProps) {
+export default function Error({ error, reset }: ErrorProps) {
 	const pathname = usePathname()
 
 	useEffect(() => {
@@ -23,8 +24,7 @@ export default function ErrorPage({ error }: ErrorPageProps) {
 			<ErrorCard
 				title="Oops something went wrong!"
 				description="There was an error processing your request. Please try again later."
-				retryLink="/"
-				retryLinkText="Go to Home"
+				reset={reset}
 			/>
 		</Shell>
 	)

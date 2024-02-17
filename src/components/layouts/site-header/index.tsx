@@ -1,9 +1,11 @@
 import { cookies } from 'next/headers'
 
 import { CartSheet } from '@/components/checkout/cart-sheet'
+import { CartSheetEmpty } from '@/components/checkout/empty-cart-sheet'
 import { siteConfig } from '@/config/site'
 import { getCart } from '@/lib/shopify/actions/queries/get-cart'
 
+import { ErrorBoundary } from '../error-boundary'
 import MainNav from '../navigation/main-nav'
 
 export async function SiteHeader() {
@@ -20,8 +22,9 @@ export async function SiteHeader() {
 				<MainNav items={siteConfig.mainNav} />
 				<div className="flex flex-1 items-center justify-end space-x-4">
 					<nav className="flex items-center space-x-2">
-						{/* Refactor to display no cart static component if cartId is undefined */}
-						<CartSheet cart={cart} />
+						<ErrorBoundary>
+							{cart ? <CartSheet cart={cart} /> : <CartSheetEmpty />}
+						</ErrorBoundary>
 					</nav>
 				</div>
 			</div>
