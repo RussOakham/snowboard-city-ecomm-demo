@@ -1,5 +1,6 @@
 import React from 'react'
 import { ChevronRightIcon } from '@radix-ui/react-icons'
+import { Route } from 'next'
 import Link from 'next/link'
 
 import { cn, truncate } from '@/lib/utils'
@@ -37,7 +38,7 @@ export function Breadcrumbs({
 				return (
 					<React.Fragment key={segment.href}>
 						<Link
-							href={segment.href}
+							href={segment.href as Route}
 							aria-current={isLastSegment ? 'page' : undefined}
 							className={cn(
 								'truncate transition-colors hover:text-foreground',

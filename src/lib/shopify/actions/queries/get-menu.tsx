@@ -11,6 +11,7 @@ export async function getMenu(handle: string): Promise<Menu[]> {
 		variables: {
 			handle,
 		},
+		cache: 'no-store',
 	})
 
 	return (

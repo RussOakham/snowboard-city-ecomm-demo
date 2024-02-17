@@ -3,10 +3,10 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { getMenu } from '@/lib/shopify/actions/queries/get-menu'
 
 export const useGetMenuQuery = (handle: string) => {
-	const query = useSuspenseQuery({
+	const res = useSuspenseQuery({
 		queryKey: ['menu', handle],
 		queryFn: async () => getMenu(handle),
 	})
 
-	return [query.data] as const
+	return [res.data] as const
 }

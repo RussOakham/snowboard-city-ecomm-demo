@@ -12,11 +12,15 @@ import { Products } from '@/components/products'
 import { useGetProductsQuery } from '@/lib/react-query/queries/useGetProductsQuery'
 import { defaultSort, sorting } from '@/lib/shopify/constants'
 import { Product } from '@/lib/shopify/types/product'
-import { SearchParams } from '@/types'
 
 interface ProductsPageProps {
-	searchParams: SearchParams
-	modal: React.ReactNode
+	params: {
+		sort: string
+		category: string
+		inStock: string
+		price_range: string
+	}
+	// modal: React.ReactNode
 }
 
 const categories = [
@@ -28,12 +32,9 @@ const categories = [
 	'accessories',
 ]
 
-export default function ProductsPage({
-	searchParams,
-	modal,
-}: ProductsPageProps) {
+export default function ProductsPage({ params }: ProductsPageProps) {
 	// eslint-disable-next-line @typescript-eslint/naming-convention
-	const { sort, category, inStock, price_range } = searchParams as {
+	const { sort, category, inStock, price_range } = params as {
 		[key: string]: string
 	}
 	const { sortKey, reverse } =
@@ -108,7 +109,7 @@ export default function ProductsPage({
 				categories={categories}
 				pageCount={1}
 			/>
-			{modal}
+			{/* {modal} */}
 		</Shell>
 	)
 }
