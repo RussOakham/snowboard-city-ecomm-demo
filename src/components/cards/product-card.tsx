@@ -1,3 +1,5 @@
+'use client'
+
 import { useState, useTransition } from 'react'
 import { CheckIcon, EyeOpenIcon, PlusIcon } from '@radix-ui/react-icons'
 import { Route } from 'next'
@@ -6,7 +8,7 @@ import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { toast } from 'sonner'
 
-import { addItem } from '@/lib/actions/cart'
+import { useAddItemMutation } from '@/lib/react-query/mutations/useAddItemMutation'
 import { Product, ProductVariant } from '@/lib/shopify/types/product'
 import { catchError, cn } from '@/lib/utils'
 
@@ -37,6 +39,7 @@ const CartActionButton = ({ isAddedToCart }: CardActionButtonProps) => {
 
 interface ProductCardProps extends React.HTMLAttributes<HTMLDivElement> {
 	product: Product
+	cartid: string | undefined
 	variant?: 'default' | 'switchable'
 	isAddedToCart?: boolean
 	onSwitch?: () => Promise<void>
@@ -54,6 +57,9 @@ const ProductCard = ({
 	const searchParams = useSearchParams()
 	const [isAddingToCart, startAddingToCart] = useTransition()
 	const [imageLoaded, setImageLoaded] = useState(false)
+	const addItemMutation = useAddItemMutation()
+
+	const { cartid } = props
 
 	const productVariant = product.variants.find((v: ProductVariant) =>
 		v.selectedOptions.every(
@@ -109,13 +115,27 @@ const ProductCard = ({
 							className="h-8 w-full rounded-sm"
 							variant={product.availableForSale ? 'default' : 'destructive'}
 							onClick={() => {
-								startAddingToCart(async () => {
-									try {
-										await addItem(null, selectedVariantId)
-										toast.success(`${product.title} added to cart`)
-									} catch (err) {
-										catchError(err)
+								startAddingToCart(() => {
+									// await addItem(null, selectedVariantId)
+									if (!selectedVariantId) {
+										throw new Error('Missing product variant ID')
 									}
+									addItemMutation.mutate(
+										{
+											prevState: null,
+											selectedVariantId,
+											product,
+											cartid,
+										},
+										{
+											onSuccess: () => {
+												toast.success(`${product.title} added to cart`)
+											},
+											onError: (err) => {
+												catchError(err)
+											},
+										},
+									)
 								})
 							}}
 							disabled={isAddingToCart || !product.availableForSale}
@@ -149,13 +169,27 @@ const ProductCard = ({
 						size="sm"
 						className="h-8 w-full rounded-sm"
 						onClick={() => {
-							startAddingToCart(async () => {
-								try {
-									await addItem(null, selectedVariantId)
-									toast.success(`${product.title} added to cart`)
-								} catch (err) {
-									catchError(err)
+							startAddingToCart(() => {
+								// await addItem(null, selectedVariantId)
+								if (!selectedVariantId) {
+									throw new Error('Missing product variant ID')
 								}
+								addItemMutation.mutate(
+									{
+										prevState: null,
+										selectedVariantId,
+										product,
+										cartid,
+									},
+									{
+										onSuccess: () => {
+											toast.success(`${product.title} added to cart`)
+										},
+										onError: (err) => {
+											catchError(err)
+										},
+									},
+								)
 							})
 						}}
 						disabled={isAddingToCart || !product.availableForSale}
