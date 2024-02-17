@@ -1,5 +1,6 @@
 import { ArrowRightIcon } from '@radix-ui/react-icons'
 import { Slot } from '@radix-ui/react-slot'
+import { Route } from 'next'
 import Link from 'next/link'
 
 import { Button } from '@/components/ui/button'
@@ -40,7 +41,7 @@ export function ContentSection({
 					) : null}
 				</div>
 				<Button variant="outline" className="hidden sm:flex" asChild>
-					<Link href={href}>
+					<Link href={href as Route}>
 						{linkText}
 						<ArrowRightIcon className="ml-2 size-4" aria-hidden="true" />
 						<span className="sr-only"> {linkText}</span>
@@ -61,7 +62,7 @@ export function ContentSection({
 					className="mx-auto flex w-fit sm:hidden"
 					asChild
 				>
-					<Link href={href}>
+					<Link href={href as Route}>
 						{linkText}
 						<ArrowRightIcon className="ml-2 size-4" aria-hidden="true" />
 						<span className="sr-only"> {linkText}</span>
