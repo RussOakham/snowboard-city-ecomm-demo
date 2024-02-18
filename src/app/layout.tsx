@@ -11,7 +11,8 @@ import './globals.css'
 
 export const metadata: Metadata = {
 	metadataBase: new URL(
-		process.env.NEXT_PUBLIC_VERCEL_URL ?? 'https://snowboard-city.vercel.app/',
+		`https://${process.env.NEXT_PUBLIC_VERCEL_URL}` ??
+			'https://snowboard-city.vercel.app/',
 	),
 	title: {
 		default: siteConfig.name,
