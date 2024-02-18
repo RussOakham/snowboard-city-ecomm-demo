@@ -8,7 +8,8 @@
 		"start": "next start",
 		"lint": "next lint",
 		"prettier-check": "prettier . --check",
-		"prettier-fix": "prettier . --write"
+		"prettier-fix": "prettier . --write",
+		"unlighthouse": "pnpm dlx unlighthouse --site https://snowboard-city-ecomm-demo.vercel.app"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^3.3.4",
