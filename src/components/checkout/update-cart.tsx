@@ -2,8 +2,11 @@
 
 import React from 'react'
 import { MinusIcon, PlusIcon, TrashIcon } from '@radix-ui/react-icons'
+import Cookies from 'js-cookie'
+import { toast } from 'sonner'
 
-import { removeItem, updateItemQuantity } from '@/lib/actions/cart'
+import { updateItemQuantity } from '@/lib/actions/cart'
+import { useRemoveItemMutation } from '@/lib/react-query/mutations/useRemoveItemMutation'
 import { CartItem } from '@/lib/shopify/types/cart'
 import { catchError } from '@/lib/utils'
 
@@ -17,6 +20,9 @@ interface UpdateCartProps {
 export function UpdateCart({ cartLineItem }: UpdateCartProps) {
 	const id = React.useId()
 	const [isPending, startTransition] = React.useTransition()
+	const removeItemMutation = useRemoveItemMutation()
+
+	const cartId = Cookies.get('cartId')
 
 	return (
 		<div className="xs:w-auto xs:justify-normal mb-2 flex w-full items-center justify-between space-x-2">
@@ -94,12 +100,27 @@ export function UpdateCart({ cartLineItem }: UpdateCartProps) {
 					size="icon"
 					className="ml-2 size-8"
 					onClick={() => {
-						startTransition(async () => {
-							try {
-								await removeItem(null, cartLineItem.id)
-							} catch (err) {
-								catchError(err)
+						startTransition(() => {
+							if (!cartLineItem.id) {
+								throw new Error('Missing cart line item ID')
 							}
+							removeItemMutation.mutate(
+								{
+									prevState: null,
+									cartId,
+									cartLineItem,
+								},
+								{
+									onSuccess: () => {
+										toast.success(
+											`${cartLineItem.merchandise.product.title} removed from cart`,
+										)
+									},
+									onError: (err) => {
+										catchError(err)
+									},
+								},
+							)
 						})
 					}}
 					disabled={isPending}

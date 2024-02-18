@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from 'react'
 import { CheckIcon, EyeOpenIcon, PlusIcon } from '@radix-ui/react-icons'
+import Cookies from 'js-cookie'
 import { Route } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -39,7 +40,6 @@ const CartActionButton = ({ isAddedToCart }: CardActionButtonProps) => {
 
 interface ProductCardProps extends React.HTMLAttributes<HTMLDivElement> {
 	product: Product
-	cartid: string | undefined
 	variant?: 'default' | 'switchable'
 	isAddedToCart?: boolean
 	onSwitch?: () => Promise<void>
@@ -59,7 +59,7 @@ const ProductCard = ({
 	const [imageLoaded, setImageLoaded] = useState(false)
 	const addItemMutation = useAddItemMutation()
 
-	const { cartid } = props
+	const cartId = Cookies.get('cartId')
 
 	const productVariant = product.variants.find((v: ProductVariant) =>
 		v.selectedOptions.every(
@@ -125,7 +125,7 @@ const ProductCard = ({
 											prevState: null,
 											selectedVariantId,
 											product,
-											cartid,
+											cartId,
 										},
 										{
 											onSuccess: () => {
@@ -179,7 +179,7 @@ const ProductCard = ({
 										prevState: null,
 										selectedVariantId,
 										product,
-										cartid,
+										cartId,
 									},
 									{
 										onSuccess: () => {

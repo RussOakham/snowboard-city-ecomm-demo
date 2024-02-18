@@ -7,11 +7,7 @@ import { useGetProductsQuery } from '@/lib/react-query/queries/useGetProductsQue
 import ProductCard from './cards/product-card'
 import { ErrorBoundary } from './layouts/error-boundary'
 
-interface FeaturedProductsProps {
-	cartid: string | undefined
-}
-
-export const FeaturedProducts = ({ cartid }: FeaturedProductsProps) => {
+export const FeaturedProducts = () => {
 	// Collections that start with `hidden-*` are hidden from the search page.
 	// Update to use Featured Products Query - create new collection in Shopify?
 	// Add maximum turn number - 8?
@@ -23,7 +19,7 @@ export const FeaturedProducts = ({ cartid }: FeaturedProductsProps) => {
 		<ErrorBoundary>
 			<Suspense fallback={<div>Loading Featured Products...</div>}>
 				{products.map((product) => (
-					<ProductCard product={product} key={product.id} cartid={cartid} />
+					<ProductCard product={product} key={product.id} />
 				))}
 			</Suspense>
 		</ErrorBoundary>

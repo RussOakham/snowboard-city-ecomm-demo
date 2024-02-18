@@ -38,7 +38,7 @@ export const useAddItemMutation = () => {
 			prevState: any
 			selectedVariantId: string
 			product: Product
-			cartid: string | undefined
+			cartId: string | undefined
 		}) => addItem(prevState, selectedVariantId),
 
 		// Augment caches to mimic onSuccess scenario, to provide optimistic UX.
@@ -46,11 +46,11 @@ export const useAddItemMutation = () => {
 		onMutate: async ({
 			selectedVariantId,
 			product,
-			cartid,
+			cartId,
 		}: {
 			selectedVariantId: string
 			product: Product
-			cartid: string | undefined
+			cartId: string | undefined
 		}) => {
 			const selectedVariant = product.variants.find(
 				(v) => v.id === selectedVariantId,
@@ -65,14 +65,14 @@ export const useAddItemMutation = () => {
 			}
 
 			// Cancel any outgoing cart queries
-			await queryClient.cancelQueries({ queryKey: ['cart', cartid] })
+			await queryClient.cancelQueries({ queryKey: ['cart', cartId] })
 
 			// Get previous Cart state and if no previous cart, set to mocked empty cart state
-			const previousCart = queryClient.getQueryData<Cart>(['cart', cartid])
+			const previousCart = queryClient.getQueryData<Cart>(['cart', cartId])
 
 			const cart: Cart = previousCart ?? emptyCart
 
-			const optimisticCart = {
+			const optimisticCart: Cart = {
 				...cart,
 				lines: [
 					...cart.lines,
@@ -97,7 +97,7 @@ export const useAddItemMutation = () => {
 			}
 
 			// Set cart to optimistic state
-			queryClient.setQueryData<Cart>(['cart', cartid], optimisticCart)
+			queryClient.setQueryData<Cart>(['cart', cartId], optimisticCart)
 
 			return { previousCart }
 		},
@@ -105,12 +105,11 @@ export const useAddItemMutation = () => {
 			// if error happens in mutation 'cart' cache is reset to previous state
 			if (context?.previousCart) {
 				queryClient.setQueryData(
-					['cart', variables.cartid],
+					['cart', variables.cartId],
 					context.previousCart,
 				)
 			}
 		},
-
 		onSuccess: (data) => {
 			// Shopify request always returns 200, so need to manually check and throw errors
 			if (data === 'Missing product variant ID') {
@@ -123,10 +122,10 @@ export const useAddItemMutation = () => {
 
 			return data
 		},
-		// Always invalidate cache after error or success, to trigger refetch for fresh data
 		onSettled: async (data, error, variables) => {
+			// Always invalidate cache after error or success, to trigger refetch for fresh data
 			await queryClient.invalidateQueries({
-				queryKey: ['cart', variables.cartid],
+				queryKey: ['cart', variables.cartId],
 			})
 		},
 	})

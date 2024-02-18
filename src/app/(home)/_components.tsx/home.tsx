@@ -1,4 +1,3 @@
-import { cookies } from 'next/headers'
 import Link from 'next/link'
 
 import { FeaturedProducts } from '@/components/featured-products'
@@ -8,8 +7,6 @@ import { Shell } from '@/components/layouts/shells/shell'
 import { Button } from '@/components/ui/button'
 
 const Home = () => {
-	const cartId = cookies().get('cartId')?.value
-
 	return (
 		<Shell variant="zero-vertical-padding" className="max-w-6xl">
 			<HeroBannerWithImage
@@ -39,7 +36,7 @@ const Home = () => {
 				linkText="View all products"
 				className="pt-8 md:pt-10 lg:pt-12"
 			>
-				<FeaturedProducts cartid={cartId} />
+				<FeaturedProducts />
 			</ContentSection>
 		</Shell>
 	)
