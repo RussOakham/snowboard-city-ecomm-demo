@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { MinusIcon, PlusIcon } from '@radix-ui/react-icons'
 import Cookies from 'js-cookie'
 import { useSearchParams } from 'next/navigation'
+import { useLogger } from 'next-axiom'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
@@ -43,6 +44,7 @@ export function AddToCartForm({
 	const [isAddingToCart, startAddingToCart] = React.useTransition()
 	const searchParams = useSearchParams()
 	const addItemsMutation = useAddItemsMutation()
+	const log = useLogger()
 
 	const cartId = Cookies.get('cartId')
 
@@ -69,6 +71,7 @@ export function AddToCartForm({
 					},
 					onError: (err) => {
 						catchError(err)
+						log.error('Error adding items to cart', err)
 					},
 				},
 			)

@@ -7,6 +7,7 @@ import { Route } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
+import { useLogger } from 'next-axiom'
 import { toast } from 'sonner'
 
 import { useAddItemMutation } from '@/lib/react-query/mutations/useAddItemMutation'
@@ -58,6 +59,7 @@ const ProductCard = ({
 	const [isAddingToCart, startAddingToCart] = useTransition()
 	const [imageLoaded, setImageLoaded] = useState(false)
 	const addItemMutation = useAddItemMutation()
+	const log = useLogger()
 
 	const cartId = Cookies.get('cartId')
 
@@ -130,6 +132,7 @@ const ProductCard = ({
 											},
 											onError: (err) => {
 												catchError(err)
+												log.error('Error adding to cart', err)
 											},
 										},
 									)
@@ -184,6 +187,7 @@ const ProductCard = ({
 										},
 										onError: (err) => {
 											catchError(err)
+											log.error('Error adding to cart', err)
 										},
 									},
 								)

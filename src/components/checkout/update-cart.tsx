@@ -3,6 +3,7 @@
 import React from 'react'
 import { MinusIcon, PlusIcon, TrashIcon } from '@radix-ui/react-icons'
 import Cookies from 'js-cookie'
+import { useLogger } from 'next-axiom'
 import { toast } from 'sonner'
 
 import { useRemoveItemMutation } from '@/lib/react-query/mutations/useRemoveItemMutation'
@@ -22,6 +23,7 @@ export function UpdateCart({ cartLineItem }: UpdateCartProps) {
 	const [isPending, startTransition] = React.useTransition()
 	const removeItemMutation = useRemoveItemMutation()
 	const updateItemQuantityMutation = useUpdateItemQuantityMutation()
+	const log = useLogger()
 
 	const cartId = Cookies.get('cartId')
 
@@ -49,6 +51,7 @@ export function UpdateCart({ cartLineItem }: UpdateCartProps) {
 								{
 									onError: (err) => {
 										catchError(err)
+										log.error('Error decrementing cart', err)
 									},
 								},
 							)
@@ -80,6 +83,7 @@ export function UpdateCart({ cartLineItem }: UpdateCartProps) {
 								{
 									onError: (err) => {
 										catchError(err)
+										log.error('Error updating cart', err)
 									},
 								},
 							)
@@ -107,6 +111,7 @@ export function UpdateCart({ cartLineItem }: UpdateCartProps) {
 								{
 									onError: (err) => {
 										catchError(err)
+										log.error('Error incrementing cart', err)
 									},
 								},
 							)
@@ -141,6 +146,7 @@ export function UpdateCart({ cartLineItem }: UpdateCartProps) {
 									},
 									onError: (err) => {
 										catchError(err)
+										log.error('Error removing item from cart', err)
 									},
 								},
 							)

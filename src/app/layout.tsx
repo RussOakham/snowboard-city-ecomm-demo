@@ -1,6 +1,7 @@
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import type { Metadata } from 'next'
+import { AxiomWebVitals } from 'next-axiom'
 
 import { siteConfig } from '@/config/site'
 import { fontHeading, fontMono, fontSans } from '@/lib/fonts'
@@ -11,8 +12,9 @@ import './globals.css'
 
 export const metadata: Metadata = {
 	metadataBase: new URL(
-		`https://${process.env.NEXT_PUBLIC_VERCEL_URL}` ??
-			'https://snowboard-city.vercel.app/',
+		process.env.NEXT_PUBLIC_VERCEL_URL
+			? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+			: 'http://localhost:3000',
 	),
 	title: {
 		default: siteConfig.name,
@@ -52,6 +54,7 @@ export default function RootLayout({ children }: LayoutProps) {
 					{children}
 					<Analytics />
 					<SpeedInsights />
+					<AxiomWebVitals />
 				</Providers>
 			</body>
 		</html>
