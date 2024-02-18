@@ -60,7 +60,7 @@ export function CartSheet({ cart: initialCart }: CartSheetProps) {
 				</SheetHeader>
 				{cart && cart?.totalQuantity > 0 ? (
 					<div className="space-y-4 pr-6">
-						<CartLineItems items={cart.lines} />
+						<CartLineItems items={cart.lines} isScrollable />
 						<Separator />
 						<div className="space-y-1.5 text-sm">
 							<div className="flex">

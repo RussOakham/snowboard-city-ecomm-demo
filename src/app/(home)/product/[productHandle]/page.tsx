@@ -73,7 +73,7 @@ export default function ProductPage({ params }: ProductPageProps) {
 						<Rating rating={productRating} />
 					</div>
 					<AddToCartForm
-						variants={product.variants}
+						product={product}
 						availableForSale={product.availableForSale}
 						showBuyNow
 					/>
