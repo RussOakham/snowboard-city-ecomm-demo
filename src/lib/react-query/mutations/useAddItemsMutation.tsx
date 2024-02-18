@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { addItem } from '@/lib/actions/cart'
+import { addItems } from '@/lib/actions/cart'
 import { Cart } from '@/lib/shopify/types/cart'
 import { Product } from '@/lib/shopify/types/product'
 
@@ -25,30 +25,33 @@ const emptyCart: Cart = {
 	totalQuantity: 0,
 }
 
-export const useAddItemMutation = () => {
+export const useAddItemsMutation = () => {
 	const queryClient = useQueryClient()
 
 	return useMutation({
-		// Call server function which creates cart if it doesn't exist and adds item to cart
 		mutationFn: ({
 			prevState,
 			selectedVariantId,
+			quantity,
 		}: {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			prevState: any
 			selectedVariantId: string | undefined
+			quantity: number
 			product: Product
 			cartId: string | undefined
-		}) => addItem(prevState, selectedVariantId),
+		}) => addItems(prevState, selectedVariantId, quantity),
 
 		// Augment caches to mimic onSuccess scenario, to provide optimistic UX.
 		// If no existing cart (cartid is undefined), create a new cart with the selected variant.
 		onMutate: async ({
 			selectedVariantId,
+			quantity,
 			product,
 			cartId,
 		}: {
 			selectedVariantId: string | undefined
+			quantity: number
 			product: Product
 			cartId: string | undefined
 		}) => {
@@ -72,16 +75,76 @@ export const useAddItemMutation = () => {
 
 			const cart: Cart = previousCart ?? emptyCart
 
+			// Check if cart already has the selected variant in it
+			const existingLine = cart.lines.find(
+				(line) => line.merchandise.id === selectedVariant.id,
+			)
+
+			// If it does, increment the quantity of that line
+			if (existingLine) {
+				const optimisticCart: Cart = {
+					...cart,
+					lines: cart.lines.map((line) => {
+						if (line.id === existingLine.id) {
+							return {
+								...line,
+								quantity: line.quantity + quantity,
+							}
+						}
+						return line
+					}),
+					cost: {
+						...cart.cost,
+						subtotalAmount: {
+							amount: (
+								Number(cart.cost.subtotalAmount.amount) +
+								Number(selectedVariant.price.amount) * quantity
+							).toString(),
+							currencyCode:
+								cart.cost.subtotalAmount.currencyCode ??
+								selectedVariant.price.currencyCode,
+						},
+						totalAmount: {
+							amount: (
+								Number(cart.cost.totalAmount.amount) +
+								Number(selectedVariant.price.amount) * quantity
+							).toString(),
+							currencyCode:
+								cart.cost.totalAmount.currencyCode ??
+								selectedVariant.price.currencyCode,
+						},
+						totalTaxAmount: {
+							amount: (
+								Number(cart.cost.totalTaxAmount.amount) +
+								Number(selectedVariant.price.amount) * quantity
+							).toString(),
+							currencyCode:
+								cart.cost.totalTaxAmount.currencyCode ??
+								selectedVariant.price.currencyCode,
+						},
+					},
+					totalQuantity: cart.totalQuantity + quantity,
+				}
+
+				// Set cart to optimistic state
+				queryClient.setQueryData<Cart>(['cart', cartId], optimisticCart)
+
+				return { previousCart }
+			}
+
+			// If it doesn't, add a new line to the cart
 			const optimisticCart: Cart = {
 				...cart,
 				lines: [
 					...cart.lines,
 					{
 						id: 'temp-id',
-						quantity: 1,
+						quantity,
 						cost: {
 							totalAmount: {
-								amount: selectedVariant.price.amount,
+								amount: (
+									Number(selectedVariant.price.amount) * quantity
+								).toString(),
 								currencyCode: selectedVariant.price.currencyCode,
 							},
 						},
@@ -96,20 +159,34 @@ export const useAddItemMutation = () => {
 				cost: {
 					...cart.cost,
 					subtotalAmount: {
-						amount:
-							cart.cost.subtotalAmount.amount + selectedVariant.price.amount,
-						currencyCode: selectedVariant.price.currencyCode,
+						amount: (
+							Number(cart.cost.subtotalAmount.amount) +
+							Number(selectedVariant.price.amount) * quantity
+						).toString(),
+						currencyCode:
+							cart.cost.subtotalAmount.currencyCode ??
+							selectedVariant.price.currencyCode,
 					},
 					totalAmount: {
-						amount: cart.cost.totalAmount.amount + selectedVariant.price.amount,
-						currencyCode: selectedVariant.price.currencyCode,
+						amount: (
+							Number(cart.cost.totalAmount.amount) +
+							Number(selectedVariant.price.amount) * quantity
+						).toString(),
+						currencyCode:
+							cart.cost.totalAmount.currencyCode ??
+							selectedVariant.price.currencyCode,
 					},
 					totalTaxAmount: {
-						amount: cart.cost.totalTaxAmount.amount,
-						currencyCode: cart.cost.totalTaxAmount.currencyCode,
+						amount: (
+							Number(cart.cost.totalTaxAmount.amount) +
+							Number(selectedVariant.price.amount) * quantity
+						).toString(),
+						currencyCode:
+							cart.cost.totalTaxAmount.currencyCode ??
+							selectedVariant.price.currencyCode,
 					},
 				},
-				totalQuantity: cart.totalQuantity + 1,
+				totalQuantity: cart.totalQuantity + quantity,
 			}
 
 			// Set cart to optimistic state

@@ -1,14 +1,17 @@
+'use client'
+
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { MinusIcon, PlusIcon } from '@radix-ui/react-icons'
+import Cookies from 'js-cookie'
 import { useSearchParams } from 'next/navigation'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
-import { addItems } from '@/lib/actions/cart'
+import { useAddItemsMutation } from '@/lib/react-query/mutations/useAddItemsMutation'
 import { updateCartItemFormSchema } from '@/lib/shopify/schemas/cart.schema'
-import { ProductVariant } from '@/lib/shopify/types/product'
+import { Product, ProductVariant } from '@/lib/shopify/types/product'
 import { catchError, cn } from '@/lib/utils'
 
 import { Icons } from '../icons'
@@ -24,7 +27,7 @@ import {
 import { Input } from '../ui/input'
 
 interface AddToCartFormProps {
-	variants: ProductVariant[]
+	product: Product
 	availableForSale: boolean
 	showBuyNow?: boolean
 }
@@ -32,29 +35,43 @@ interface AddToCartFormProps {
 type Inputs = z.infer<typeof updateCartItemFormSchema>
 
 export function AddToCartForm({
-	variants,
+	product,
 	availableForSale,
 	showBuyNow,
 }: AddToCartFormProps) {
 	const id = React.useId()
 	const [isAddingToCart, startAddingToCart] = React.useTransition()
 	const searchParams = useSearchParams()
+	const addItemsMutation = useAddItemsMutation()
 
-	const variant = variants.find((v: ProductVariant) =>
+	const cartId = Cookies.get('cartId')
+
+	const variant = product.variants.find((v: ProductVariant) =>
 		v.selectedOptions.every(
 			(option) => option.value === searchParams.get(option.name.toLowerCase()),
 		),
 	)
-	const selectedVariantId = variant?.id ?? variants[0]?.id
+	const selectedVariantId = variant?.id ?? product.variants[0]?.id
 
 	function onSubmit(data: Inputs) {
-		startAddingToCart(async () => {
-			try {
-				await addItems(null, selectedVariantId, data.quantity)
-				toast.success('Item added to cart')
-			} catch (err) {
-				catchError(err)
-			}
+		startAddingToCart(() => {
+			addItemsMutation.mutate(
+				{
+					cartId,
+					prevState: null,
+					product,
+					quantity: data.quantity,
+					selectedVariantId,
+				},
+				{
+					onSuccess: () => {
+						toast.success(`${product.handle} added to cart`)
+					},
+					onError: (err) => {
+						catchError(err)
+					},
+				},
+			)
 		})
 	}
 

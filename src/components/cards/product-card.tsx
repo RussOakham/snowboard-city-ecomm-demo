@@ -117,9 +117,6 @@ const ProductCard = ({
 							onClick={() => {
 								startAddingToCart(() => {
 									// await addItem(null, selectedVariantId)
-									if (!selectedVariantId) {
-										throw new Error('Missing product variant ID')
-									}
 									addItemMutation.mutate(
 										{
 											prevState: null,
@@ -129,7 +126,7 @@ const ProductCard = ({
 										},
 										{
 											onSuccess: () => {
-												toast.success(`${product.title} added to cart`)
+												toast.success(`${product.handle} added to cart`)
 											},
 											onError: (err) => {
 												catchError(err)
