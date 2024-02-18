@@ -5,8 +5,8 @@ import { MinusIcon, PlusIcon, TrashIcon } from '@radix-ui/react-icons'
 import Cookies from 'js-cookie'
 import { toast } from 'sonner'
 
-import { updateItemQuantity } from '@/lib/actions/cart'
 import { useRemoveItemMutation } from '@/lib/react-query/mutations/useRemoveItemMutation'
+import { useUpdateItemQuantityMutation } from '@/lib/react-query/mutations/useUpdateItemQuantity'
 import { CartItem } from '@/lib/shopify/types/cart'
 import { catchError } from '@/lib/utils'
 
@@ -21,6 +21,7 @@ export function UpdateCart({ cartLineItem }: UpdateCartProps) {
 	const id = React.useId()
 	const [isPending, startTransition] = React.useTransition()
 	const removeItemMutation = useRemoveItemMutation()
+	const updateItemQuantityMutation = useUpdateItemQuantityMutation()
 
 	const cartId = Cookies.get('cartId')
 
@@ -33,19 +34,27 @@ export function UpdateCart({ cartLineItem }: UpdateCartProps) {
 					size="icon"
 					className="size-8 rounded-r-none"
 					onClick={() => {
-						startTransition(async () => {
-							try {
-								await updateItemQuantity(null, {
-									lineId: cartLineItem.id,
-									variantId: cartLineItem.merchandise.id,
-									quantity: cartLineItem.quantity - 1,
-								})
-							} catch (err) {
-								catchError(err)
-							}
+						startTransition(() => {
+							updateItemQuantityMutation.mutate(
+								{
+									prevState: null,
+									payload: {
+										lineId: cartLineItem.id,
+
+										variantId: cartLineItem.merchandise.id,
+										quantity: cartLineItem.quantity - 1,
+									},
+									cartId,
+								},
+								{
+									onError: (err) => {
+										catchError(err)
+									},
+								},
+							)
 						})
 					}}
-					disabled={isPending || cartLineItem.quantity === 0}
+					disabled={cartLineItem.quantity === 0}
 				>
 					<MinusIcon className="size-3" aria-hidden="true" />
 					<span className="sr-only">Remove Item</span>
@@ -57,16 +66,23 @@ export function UpdateCart({ cartLineItem }: UpdateCartProps) {
 					className="pointer-events-none h-8 w-10 rounded-none border-x-0 text-center"
 					value={cartLineItem.quantity}
 					onChange={(e) => {
-						startTransition(async () => {
-							try {
-								await updateItemQuantity(null, {
-									lineId: cartLineItem.id,
-									variantId: cartLineItem.merchandise.id,
-									quantity: Number(e.target.value),
-								})
-							} catch (err) {
-								catchError(err)
-							}
+						startTransition(() => {
+							updateItemQuantityMutation.mutate(
+								{
+									prevState: null,
+									payload: {
+										lineId: cartLineItem.id,
+										variantId: cartLineItem.merchandise.id,
+										quantity: Number(e.target.value),
+									},
+									cartId,
+								},
+								{
+									onError: (err) => {
+										catchError(err)
+									},
+								},
+							)
 						})
 					}}
 					disabled={isPending}
@@ -77,16 +93,23 @@ export function UpdateCart({ cartLineItem }: UpdateCartProps) {
 					size="icon"
 					className="size-8 rounded-l-none"
 					onClick={() => {
-						startTransition(async () => {
-							try {
-								await updateItemQuantity(null, {
-									lineId: cartLineItem.id,
-									variantId: cartLineItem.merchandise.id,
-									quantity: cartLineItem.quantity + 1,
-								})
-							} catch (err) {
-								catchError(err)
-							}
+						startTransition(() => {
+							updateItemQuantityMutation.mutate(
+								{
+									prevState: null,
+									payload: {
+										lineId: cartLineItem.id,
+										variantId: cartLineItem.merchandise.id,
+										quantity: cartLineItem.quantity + 1,
+									},
+									cartId,
+								},
+								{
+									onError: (err) => {
+										catchError(err)
+									},
+								},
+							)
 						})
 					}}
 					disabled={isPending}

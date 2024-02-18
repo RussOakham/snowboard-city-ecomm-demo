@@ -96,16 +96,24 @@ export const useAddItemMutation = () => {
 				cost: {
 					...cart.cost,
 					subtotalAmount: {
-						amount:
-							cart.cost.subtotalAmount.amount + selectedVariant.price.amount,
+						amount: (
+							Number(cart.cost.subtotalAmount.amount) +
+							Number(selectedVariant.price.amount)
+						).toString(),
 						currencyCode: selectedVariant.price.currencyCode,
 					},
 					totalAmount: {
-						amount: cart.cost.totalAmount.amount + selectedVariant.price.amount,
+						amount: (
+							Number(cart.cost.totalAmount.amount) +
+							Number(selectedVariant.price.amount)
+						).toString(),
 						currencyCode: selectedVariant.price.currencyCode,
 					},
 					totalTaxAmount: {
-						amount: cart.cost.totalTaxAmount.amount,
+						amount: (
+							Number(cart.cost.totalTaxAmount.amount) +
+							Number(selectedVariant.price.amount) * 0.1
+						).toString(),
 						currencyCode: cart.cost.totalTaxAmount.currencyCode,
 					},
 				},
