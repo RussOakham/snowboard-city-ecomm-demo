@@ -6,7 +6,7 @@ export default function robots() {
 			{
 				userAgent: '*',
 				allow: '/',
-				exclude: '/preview',
+				disallow: '/preview',
 			},
 		],
 		sitemap: absoluteUrl('/sitemap.xml'),
