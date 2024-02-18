@@ -4,7 +4,7 @@ Use the following Env:
 
 ```env
 NEXT_PUBLIC_COMPANY_NAME="Snowboard City"
-NEXT_PUBLIC_TWITTER_CREATOR="@brag--"
+NEXT_PUBLIC_TWITTER_CREATOR=""
 NEXT_PUBLIC_TWITTER_SITE="https://nextjs.org/commerce"
 NEXT_PUBLIC_SITE_NAME="Snowboard City"
 

@@ -12,8 +12,8 @@ export const siteConfig = {
 	name: 'Snowboard City',
 	description:
 		'An open source e-commerce build with everything new in Next.js.',
-	url: 'https://skateshop.sadmn.com',
-	ogImage: 'https://skateshop.sadmn.com/opengraph-image.png',
+	url: 'https://snowboard-city-ecomm-demo-hnyjnmx2l-russoakham.vercel.app/',
+	// ogImage: 'https://skateshop.sadmn.com/opengraph-image.png',
 	links,
 	mainNav: [
 		{
@@ -40,4 +40,27 @@ export const siteConfig = {
 			],
 		},
 	] satisfies MainNavItem[],
+	keywords: [
+		'snowboard',
+		'ski',
+		'snow',
+		'winter',
+		'outdoor',
+		'adventure',
+		'ecommerce',
+		'open source',
+		'next.js',
+		'headless',
+		'jamstack',
+		'shopify',
+		'commerce',
+	],
+	authors: [
+		{
+			name: 'Russell Oakham',
+			twitter: 'https://twitter.com/brag___',
+			github: 'https://github.com/RussOakham',
+			linkedId: 'https://www.linkedin.com/in/russell-oakham-11a08585/',
+		},
+	],
 }
