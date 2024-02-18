@@ -1,5 +1,6 @@
 import { HIDDEN_PRODUCT_TAG } from '../constants'
 import { Cart, ShopifyCart } from '../types/cart'
+import { Collection, ShopifyCollection } from '../types/collection'
 import { Product, ShopifyProduct } from '../types/product'
 import { Connection, Image } from '../types/shopify'
 
@@ -42,6 +43,36 @@ export const reshapeCart = (cart: ShopifyCart): Cart => {
 		...cart,
 		lines: removeEdgesAndNodes(cart.lines),
 	}
+}
+
+export const reshapeCollection = (
+	collection: ShopifyCollection,
+): Collection | undefined => {
+	if (!collection) {
+		return undefined
+	}
+
+	return {
+		...collection,
+		path: `/search/${collection.handle}`,
+	}
+}
+
+export const reshapeCollections = (collections: ShopifyCollection[]) => {
+	const reshapedCollections = []
+
+	// eslint-disable-next-line no-restricted-syntax
+	for (const collection of collections) {
+		if (collection) {
+			const reshapedCollection = reshapeCollection(collection)
+
+			if (reshapedCollection) {
+				reshapedCollections.push(reshapedCollection)
+			}
+		}
+	}
+
+	return reshapedCollections
 }
 
 export const reshapeProduct = (

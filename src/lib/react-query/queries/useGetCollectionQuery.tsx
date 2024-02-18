@@ -1,6 +1,6 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 
-import { getCollection } from '@/lib/shopify/actions/queries/get-collections'
+import { getCollection } from '@/lib/shopify/actions/queries/get-collection'
 
 interface UseGetCollectionQueryParams {
 	collection: string

@@ -3,6 +3,12 @@ import { toast } from 'sonner'
 import { twMerge } from 'tailwind-merge'
 import { z } from 'zod'
 
+export function absoluteUrl(path?: string) {
+	return process.env.NEXT_PUBLIC_VERCEL_URL
+		? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}${path}`
+		: `http://localhost:3000${path}`
+}
+
 export function catchError(err: unknown) {
 	if (err instanceof z.ZodError) {
 		const errors = err.issues.map((issue) => {

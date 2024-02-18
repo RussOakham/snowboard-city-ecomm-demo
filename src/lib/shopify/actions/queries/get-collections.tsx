@@ -1,37 +1,34 @@
 import { shopifyFetch } from '@/lib/shopify'
 
 import { TAGS } from '../../constants'
-import { getCollectionProductsQuery } from '../../queries/collection'
-import {
-	Product,
-	ShopifyCollectionProductsOperation,
-} from '../../types/product'
-import { removeEdgesAndNodes, reshapeProducts } from '../../utils'
+import { getCollectionsQuery } from '../../queries/collection'
+import { Collection, ShopifyCollectionsOperation } from '../../types/collection'
+import { removeEdgesAndNodes, reshapeCollections } from '../../utils'
 
-export async function getCollection({
-	collection,
-	reverse,
-	sortKey,
-}: {
-	collection: string
-	reverse?: boolean
-	sortKey?: string
-}): Promise<Product[]> {
-	const res = await shopifyFetch<ShopifyCollectionProductsOperation>({
-		query: getCollectionProductsQuery,
-		tags: [TAGS.collections, TAGS.products],
-		variables: {
-			handle: collection,
-			reverse,
-			sortKey: sortKey === 'CREATED_AT' ? 'CREATED' : sortKey,
-		},
+export async function getCollections(): Promise<Collection[]> {
+	const res = await shopifyFetch<ShopifyCollectionsOperation>({
+		query: getCollectionsQuery,
+		tags: [TAGS.collections],
 	})
+	const shopifyCollections = removeEdgesAndNodes(res.body?.data?.collections)
+	const collections = [
+		{
+			handle: '',
+			title: 'All',
+			description: 'All products',
+			seo: {
+				title: 'All',
+				description: 'All products',
+			},
+			path: '/search',
+			updatedAt: new Date().toISOString(),
+		},
+		// Filter out the `hidden` collections.
+		// Collections that start with `hidden-*` need to be hidden on the search page.
+		...reshapeCollections(shopifyCollections).filter(
+			(collection) => !collection.handle.startsWith('hidden'),
+		),
+	]
 
-	if (!res.body.data.collection) {
-		// eslint-disable-next-line no-console
-		console.log(`No collection found for "${collection}"`)
-		return []
-	}
-
-	return reshapeProducts(removeEdgesAndNodes(res.body.data.collection.products))
+	return collections
 }
