@@ -1,11 +1,10 @@
-import type { MainNavItem } from '@/types'
+import type { FooterItem, MainNavItem } from '@/types'
 
 const links = {
-	twitter: 'https://twitter.com/sadmann17',
-	github: 'https://github.com/sadmann7/skateshop',
-	githubAccount: 'https://github.com/sadmann7',
-	discord: 'https://discord.com/users/sadmann7',
-	calDotCom: 'https://cal.com/sadmann7',
+	twitter: 'https://twitter.com/brag___',
+	github: 'https://github.com/RussOakham/snowboard-city-ecomm-demo',
+	githubAccount: 'https://github.com/RussOakham',
+	linkedIn: 'https://www.linkedin.com/in/russell-oakham-11a08585/',
 }
 
 export const siteConfig = {
@@ -58,9 +57,86 @@ export const siteConfig = {
 	authors: [
 		{
 			name: 'Russell Oakham',
-			twitter: 'https://twitter.com/brag___',
-			github: 'https://github.com/RussOakham',
-			linkedId: 'https://www.linkedin.com/in/russell-oakham-11a08585/',
+			twitter: links.twitter,
+			github: links.githubAccount,
+			linkedId: links.linkedIn,
 		},
 	],
+	footerNav: [
+		{
+			title: 'Credits',
+			items: [
+				{
+					title: 'Vercel E-Commerce 2.0',
+					href: 'https://demo.vercel.store/',
+					external: true,
+				},
+				{
+					title: 'Skateshop',
+					href: 'https://skateshop.sadmn.com/',
+					external: true,
+				},
+				{
+					title: 'Taxonomy',
+					href: 'https://tx.shadcn.com/',
+					external: true,
+				},
+				{
+					title: 'shadcn/ui',
+					href: 'https://ui.shadcn.com',
+					external: true,
+				},
+			],
+		},
+		{
+			title: 'Help',
+			items: [
+				{
+					title: 'About',
+					href: '/pages/about',
+					external: false,
+				},
+				{
+					title: 'Contact',
+					href: '/pages/Contact',
+					external: false,
+				},
+				{
+					title: 'Terms',
+					href: '/pages/terms',
+					external: false,
+				},
+				{
+					title: 'Privacy',
+					href: '/pages/privacy',
+					external: false,
+				},
+			],
+		},
+		{
+			title: 'Social',
+			items: [
+				{
+					title: 'Twitter',
+					href: links.twitter,
+					external: true,
+				},
+				{
+					title: 'GitHub',
+					href: links.githubAccount,
+					external: true,
+				},
+				{
+					title: 'Github Repo',
+					href: links.github,
+					external: true,
+				},
+				{
+					title: 'LinkedIn',
+					href: links.linkedIn,
+					external: true,
+				},
+			],
+		},
+	] satisfies FooterItem[],
 }

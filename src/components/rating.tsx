@@ -1,6 +1,4 @@
-import { StarIcon } from '@radix-ui/react-icons'
-
-import { cn } from '@/lib/utils'
+import { StarFilledIcon, StarIcon } from '@radix-ui/react-icons'
 
 interface RatingProps {
 	rating: number
@@ -12,13 +10,20 @@ export function Rating({ rating }: RatingProps) {
 			{Array.from({ length: 5 }).map((_, i) => {
 				const index = i + 1
 
+				if (rating >= index) {
+					return (
+						<StarFilledIcon
+							key={index}
+							className="size-4 text-yellow-500"
+							aria-hidden="true"
+						/>
+					)
+				}
+
 				return (
 					<StarIcon
 						key={index}
-						className={cn(
-							'size-4',
-							rating >= i + 1 ? 'text-yellow-500' : 'text-muted-foreground',
-						)}
+						className="size-4 text-yellow-500"
 						aria-hidden="true"
 					/>
 				)

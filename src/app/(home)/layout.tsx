@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { SiteFooter } from '@/components/layouts/site-footer'
 import { SiteHeader } from '@/components/layouts/site-header'
 
 interface SkiLodgeLayoutProps
@@ -15,6 +16,7 @@ const SkiLodgeLayout = ({ children, modal }: SkiLodgeLayoutProps) => {
 				{children}
 				{modal}
 			</main>
+			<SiteFooter />
 		</div>
 	)
 }
