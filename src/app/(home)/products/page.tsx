@@ -21,10 +21,10 @@ export const metadata: Metadata = {
 }
 
 interface ProductsPageProps {
-	modal: React.ReactNode
+	productsModal: React.ReactNode
 }
 
-export default function ProductsPage({ modal }: ProductsPageProps) {
+export default function ProductsPage({ productsModal }: ProductsPageProps) {
 	return (
 		<Shell>
 			<PageHeader>
@@ -34,7 +34,7 @@ export default function ProductsPage({ modal }: ProductsPageProps) {
 				</PageHeaderDescription>
 			</PageHeader>
 			<ProductsPageContainer />
-			{modal}
+			{productsModal}
 		</Shell>
 	)
 }
