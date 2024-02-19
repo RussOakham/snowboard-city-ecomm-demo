@@ -20,11 +20,7 @@ export const metadata: Metadata = {
 	description: 'Buy the best products from our store',
 }
 
-interface ProductsPageProps {
-	productsModal: React.ReactNode
-}
-
-export default function ProductsPage({ productsModal }: ProductsPageProps) {
+export default function ProductsPage() {
 	return (
 		<Shell>
 			<PageHeader>
@@ -34,7 +30,6 @@ export default function ProductsPage({ productsModal }: ProductsPageProps) {
 				</PageHeaderDescription>
 			</PageHeader>
 			<SearchPageContainer />
-			{productsModal}
 		</Shell>
 	)
 }

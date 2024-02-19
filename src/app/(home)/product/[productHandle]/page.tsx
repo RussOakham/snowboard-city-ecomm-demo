@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
 
 import { Shell } from '@/components/layouts/shells/shell'
 import { env } from '@/env.mjs'
@@ -9,19 +8,17 @@ import { toTitleCase } from '@/lib/utils'
 
 import { ProductPageContainer } from './_components/product-page-container'
 
-export const runtime = 'edge'
-
-export async function generateMetaData({
+export const generateMetadata = async ({
 	params,
 }: {
 	params: {
 		productHandle: string
 	}
-}): Promise<Metadata> {
+}): Promise<Metadata> => {
 	const product = await getProduct(params.productHandle)
 
 	if (!product) {
-		return notFound()
+		return {}
 	}
 
 	const { url, width, height, altText } = product.featuredImage ?? {}
@@ -64,10 +61,12 @@ interface ProductPageProps {
 	}
 }
 
-export default function ProductPage({ params }: ProductPageProps) {
+function ProductPage({ params }: ProductPageProps) {
 	return (
 		<Shell className="pb-12 md:pb-14">
 			<ProductPageContainer params={params} />
 		</Shell>
 	)
 }
+
+export default ProductPage
