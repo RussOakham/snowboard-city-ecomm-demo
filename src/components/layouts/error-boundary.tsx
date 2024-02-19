@@ -5,7 +5,7 @@ import { ErrorBoundary as ReactErrorBoundary } from 'react-error-boundary'
 import Error from '@/app/(home)/_components/Error'
 
 interface MyErrorInfo {
-	componentStack?: string | null | undefined
+	componentStack?: string | null
 }
 
 interface ErrorBoundaryProps {
