@@ -11,7 +11,7 @@ interface ErrorProps {
 	reset?: () => void
 }
 
-export default function Error({ error, reset }: ErrorProps) {
+export default function ErrorContainer({ error, reset }: ErrorProps) {
 	const pathname = usePathname()
 
 	useEffect(() => {
