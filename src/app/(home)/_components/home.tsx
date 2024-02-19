@@ -34,7 +34,7 @@ const Home = () => {
 				description="Explore our wide range of products"
 				href="/products"
 				linkText="View all products"
-				className="pt-8 md:pt-10 lg:pt-12"
+				className="py-8 md:py-10 lg:py-12"
 			>
 				<FeaturedProducts />
 			</ContentSection>

@@ -1,6 +1,7 @@
 import { Route } from 'next'
 import Link from 'next/link'
 
+import { JoinNewsletterForm } from '@/components/forms/join-newsletter-form'
 import { Icons } from '@/components/icons'
 import { buttonVariants } from '@/components/ui/button'
 import { siteConfig } from '@/config/site'
@@ -63,6 +64,7 @@ export function SiteFooter() {
 						<h4 className="text-base font-medium">
 							Subscribe to our newsletter
 						</h4>
+						<JoinNewsletterForm />
 					</section>
 				</section>
 				<section

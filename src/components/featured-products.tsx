@@ -15,10 +15,13 @@ export const FeaturedProducts = () => {
 
 	if (!products || products.length === 0) return <p>No products found.</p>
 
+	// limit map to return 8 items
+	const featuredProducts = products.slice(0, 8)
+
 	return (
 		<ErrorBoundary>
 			<Suspense fallback={<div>Loading Featured Products...</div>}>
-				{products.map((product) => (
+				{featuredProducts.map((product) => (
 					<ProductCard product={product} key={product.id} />
 				))}
 			</Suspense>
