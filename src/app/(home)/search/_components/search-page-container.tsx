@@ -27,7 +27,7 @@ export function SearchPageContainer() {
 	let searchValue = ''
 
 	if (search) {
-		searchValue = search
+		searchValue = `title:${search}* OR tags:${search}*`
 	}
 
 	const [products] = useGetProductsQuery({

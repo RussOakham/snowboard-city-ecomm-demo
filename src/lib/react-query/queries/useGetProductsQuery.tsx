@@ -21,5 +21,7 @@ export const useGetProductsQuery = ({
 			}),
 	})
 
+	console.log(query)
+
 	return [res.data] as const
 }
