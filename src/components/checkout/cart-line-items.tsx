@@ -75,6 +75,9 @@ export function CartLineItems({
 										<span className="line-clamp-1 text-sm font-medium">
 											{item.merchandise.product.title}
 										</span>
+										<span className="line-clamp-1 text-xs capitalize text-muted-foreground">
+											{`${item.merchandise.title}`}
+										</span>
 										{isEditable ? (
 											<span className="line-clamp-1 text-xs text-muted-foreground">
 												{formatPrice(
