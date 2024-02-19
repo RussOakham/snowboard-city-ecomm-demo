@@ -1,6 +1,4 @@
-'use client'
-
-import { useCallback, useMemo } from 'react'
+import { Metadata } from 'next'
 
 import { Shell } from '@/components/layouts/shells/shell'
 import {
@@ -8,94 +6,25 @@ import {
 	PageHeaderDescription,
 	PageHeaderHeading,
 } from '@/components/page-header'
-import { Products } from '@/components/products'
-import { useGetProductsQuery } from '@/lib/react-query/queries/useGetProductsQuery'
-import { defaultSort, sorting } from '@/lib/shopify/constants'
-import { Product } from '@/lib/shopify/types/product'
+import { env } from '@/env.mjs'
 
-interface ProductsPageProps {
-	params: {
-		sort: string
-		category: string
-		inStock: string
-		price_range: string
-	}
-	// modal: React.ReactNode
+import { ProductsPageContainer } from './_components/products-page-container'
+
+export const metadata: Metadata = {
+	metadataBase: new URL(
+		env.NEXT_PUBLIC_VERCEL_URL
+			? `https://${env.NEXT_PUBLIC_VERCEL_URL}`
+			: 'http://localhost:3000',
+	),
+	title: 'Products',
+	description: 'Buy the best products from our store',
 }
 
-const categories = [
-	'snowboards',
-	'ski-jackets',
-	'goggles',
-	'snowboard-boots',
-	'gift-card',
-	'accessories',
-]
+interface ProductsPageProps {
+	modal: React.ReactNode
+}
 
-export default function ProductsPage({ params }: ProductsPageProps) {
-	// eslint-disable-next-line @typescript-eslint/naming-convention
-	const { sort, category, inStock, price_range } = params as {
-		[key: string]: string
-	}
-	const { sortKey, reverse } =
-		sorting.find((item) => item.slug === sort) ?? defaultSort
-
-	const categoryQuery = category ? `product_type:${category}` : ''
-
-	const queryString = categoryQuery
-
-	const [products] = useGetProductsQuery({
-		sortKey,
-		reverse,
-		query: queryString,
-	})
-
-	// Temporary client side filter, as Shopify doesn't support all $query parameters
-	// TODO: Refactor Shopify GraphQL query to accept filter params
-	const filterProducts = useCallback(
-		(productsData: Product[], inStockBool: boolean, priceRange: string) => {
-			let filteredProducts = productsData
-
-			if (inStockBool) {
-				filteredProducts = products.filter(
-					(product) => product.availableForSale,
-				)
-			}
-
-			if (!inStockBool) {
-				filteredProducts = products.filter(
-					(product) => !product.availableForSale,
-				)
-			}
-
-			const [min, max] = priceRange.split('-')
-			filteredProducts = filteredProducts.filter(
-				(product) =>
-					Number(product.priceRange.minVariantPrice.amount) >= Number(min) &&
-					Number(product.priceRange.minVariantPrice.amount) <= Number(max),
-			)
-
-			return filteredProducts
-		},
-		[products],
-	)
-
-	let inStockBool = true
-
-	if (inStock === 'false') {
-		inStockBool = false
-	}
-
-	let priceRange = '0-2000'
-
-	if (price_range) {
-		priceRange = price_range
-	}
-
-	const filteredProducts = useMemo(() => {
-		return filterProducts(products, inStockBool, priceRange)
-	}, [filterProducts, inStockBool, priceRange, products])
-
+export default function ProductsPage({ modal }: ProductsPageProps) {
 	return (
 		<Shell>
 			<PageHeader>
@@ -104,12 +33,10 @@ export default function ProductsPage({ params }: ProductsPageProps) {
 					Buy the best products from our store
 				</PageHeaderDescription>
 			</PageHeader>
-			<Products
-				products={filteredProducts}
-				categories={categories}
-				pageCount={1}
-			/>
-			{/* {modal} */}
+			<ProductsPageContainer />
+			{modal}
 		</Shell>
 	)
 }
+
+ProductsPage.displayName = 'ProductsPage'

@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 	),
 	title: {
 		default: siteConfig.name,
-		template: '%s | Snowboard City',
+		template: `%s | ${siteConfig.name}`,
 	},
 	description: siteConfig.description,
 	keywords: siteConfig.keywords,
