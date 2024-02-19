@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import { AxiomWebVitals } from 'next-axiom'
 
 import { siteConfig } from '@/config/site'
+import { env } from '@/env.mjs'
 import { fontHeading, fontMono, fontSans } from '@/lib/fonts'
 import { cn } from '@/lib/utils'
 import Providers from '@/providers/providers'
@@ -12,8 +13,8 @@ import './globals.css'
 
 export const metadata: Metadata = {
 	metadataBase: new URL(
-		process.env.NEXT_PUBLIC_VERCEL_URL
-			? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+		env.NEXT_PUBLIC_VERCEL_URL
+			? `https://${env.NEXT_PUBLIC_VERCEL_URL}`
 			: 'http://localhost:3000',
 	),
 	title: {

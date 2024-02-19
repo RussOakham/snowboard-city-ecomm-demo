@@ -3,15 +3,17 @@ import { toast } from 'sonner'
 import { twMerge } from 'tailwind-merge'
 import { z } from 'zod'
 
+import { env } from '@/env.mjs'
+
 export function absoluteUrl(path?: string) {
 	if (!path) {
-		return process.env.NEXT_PUBLIC_VERCEL_URL
-			? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+		return env.NEXT_PUBLIC_VERCEL_URL
+			? `https://${env.NEXT_PUBLIC_VERCEL_URL}`
 			: 'http://localhost:3000'
 	}
 
-	return process.env.NEXT_PUBLIC_VERCEL_URL
-		? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}${path}`
+	return env.NEXT_PUBLIC_VERCEL_URL
+		? `https://${env.NEXT_PUBLIC_VERCEL_URL}${path}`
 		: `http://localhost:3000${path}`
 }
 

@@ -1,8 +1,10 @@
+import { env } from '@/env.mjs'
+
 import { SHOPIFY_GRAPHQL_API_ENDPOINT } from './constants'
 
-export const domain = `https://${process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN!}`
+export const domain = `https://${env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN}`
 const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`
-const key = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN!
+const key = env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN
 
 type ExtractVariables<T> = T extends { variables: object }
 	? T['variables']

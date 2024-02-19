@@ -2,6 +2,8 @@ import { revalidateTag } from 'next/cache'
 import { headers as nextHeaders } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
 
+import { env } from '@/env.mjs'
+
 import { TAGS } from '../constants'
 
 // This is called from `app/api/revalidate.ts` so providers can control revalidation logic.
@@ -24,7 +26,7 @@ export async function revalidate(req: NextRequest): Promise<NextResponse> {
 	const isCollectionUpdate = collectionsWebhooks.includes(topic)
 	const isProductUpdate = productWebhooks.includes(topic)
 
-	if (!secret || secret !== process.env.SHOPIFY_REVALIDATION_SECRET) {
+	if (!secret || secret !== env.SHOPIFY_REVALIDATION_SECRET) {
 		// eslint-disable-next-line no-console
 		console.error('Invalid revalidation secret')
 		return NextResponse.json({ status: 200 })
