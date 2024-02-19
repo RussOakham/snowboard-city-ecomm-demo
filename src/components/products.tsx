@@ -41,9 +41,15 @@ interface ProductsProps {
 	products: Product[]
 	pageCount: number
 	categories?: Product['productType'][]
+	showFilterOptions?: boolean
 }
 
-export function Products({ products, categories, pageCount }: ProductsProps) {
+export function Products({
+	products,
+	categories,
+	pageCount,
+	showFilterOptions = true,
+}: ProductsProps) {
 	const id = useId()
 	const router = useRouter()
 	const pathname = usePathname()
@@ -124,9 +130,15 @@ export function Products({ products, categories, pageCount }: ProductsProps) {
 			<div className="flex items-center space-x-2">
 				<Sheet>
 					<SheetTrigger asChild>
-						<Button aria-label="Filter products" size="sm" disabled={isPending}>
-							Filter
-						</Button>
+						{showFilterOptions ? (
+							<Button
+								aria-label="Filter products"
+								size="sm"
+								disabled={isPending}
+							>
+								Filter
+							</Button>
+						) : null}
 					</SheetTrigger>
 					<SheetContent className="flex flex-col">
 						<SheetHeader className="px-1">Filters</SheetHeader>

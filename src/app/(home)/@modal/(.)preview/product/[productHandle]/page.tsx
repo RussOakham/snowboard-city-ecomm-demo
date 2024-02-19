@@ -65,7 +65,7 @@ export default function ProductModalPage({ params }: ProductModalPageProps) {
 			</AspectRatio>
 			<div className="space-6-6 w-full p-6 sm:p-10">
 				<div className="space-y-2">
-					<h1 className="line-clamp-2 text-2xl font-bold">{product.handle}</h1>
+					<h1 className="line-clamp-2 text-2xl font-bold">{product.title}</h1>
 					<p className="text-base text-muted-foreground">
 						{formatPrice(product.priceRange.minVariantPrice.amount)}
 					</p>

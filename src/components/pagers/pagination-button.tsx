@@ -90,7 +90,7 @@ export function PaginationButton({
 				className="size-8"
 				onClick={() => {
 					startTransition(() => {
-						router.push(
+						router.replace(
 							`${pathname}?${createQueryString({
 								page: Number(page) - 1,
 								per_page: perPage ?? null,
@@ -124,7 +124,7 @@ export function PaginationButton({
 						className="size-8"
 						onClick={() => {
 							startTransition(() => {
-								router.push(
+								router.replace(
 									`${pathname}?${createQueryString({
 										page: pageNumber,
 										per_page: perPage ?? null,
@@ -147,7 +147,7 @@ export function PaginationButton({
 				className="size-8"
 				onClick={() => {
 					startTransition(() => {
-						router.push(
+						router.replace(
 							`${pathname}?${createQueryString({
 								page: Number(page) + 1,
 								per_page: perPage ?? null,
@@ -166,7 +166,7 @@ export function PaginationButton({
 				size="icon"
 				className="hidden size-8 lg:flex"
 				onClick={() => {
-					router.push(
+					router.replace(
 						`${pathname}?${createQueryString({
 							page: pageCount ?? 10,
 							per_page: perPage ?? null,

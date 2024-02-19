@@ -8,7 +8,7 @@ import {
 } from '@/components/page-header'
 import { env } from '@/env.mjs'
 
-import { ProductsPageContainer } from './_components/products-page-container'
+import { SearchPageContainer } from './_components/search-page-container'
 
 export const metadata: Metadata = {
 	metadataBase: new URL(
@@ -19,16 +19,17 @@ export const metadata: Metadata = {
 	title: 'Products',
 	description: 'Buy the best products from our store',
 }
+
 export default function ProductsPage() {
 	return (
 		<Shell>
 			<PageHeader>
 				<PageHeaderHeading size="sm">Products</PageHeaderHeading>
 				<PageHeaderDescription size="sm">
-					Buy the best products from our store
+					Search our wide range of products
 				</PageHeaderDescription>
 			</PageHeader>
-			<ProductsPageContainer />
+			<SearchPageContainer />
 		</Shell>
 	)
 }

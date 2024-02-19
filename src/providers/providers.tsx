@@ -4,6 +4,7 @@ import React from 'react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { ReactQueryStreamedHydration } from '@tanstack/react-query-next-experimental'
+import { ThemeProvider } from 'next-themes'
 
 import { Toaster } from '@/components/ui/sonner'
 
@@ -46,7 +47,11 @@ export default function Providers({ children }: ProviderProps) {
 
 	return (
 		<QueryClientProvider client={queryClient}>
-			<ReactQueryStreamedHydration>{children}</ReactQueryStreamedHydration>
+			<ReactQueryStreamedHydration>
+				<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+					{children}
+				</ThemeProvider>
+			</ReactQueryStreamedHydration>
 			<ReactQueryDevtools initialIsOpen={false} />
 			<Toaster />
 		</QueryClientProvider>
