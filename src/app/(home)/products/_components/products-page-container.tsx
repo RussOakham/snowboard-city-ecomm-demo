@@ -17,15 +17,6 @@ const categories = [
 	'accessories',
 ]
 
-// interface ProductsPageContainerProps {
-// 	params: {
-// 		sort: string
-// 		category: string
-// 		inStock: string
-// 		price_range: string
-// 	}
-// }
-
 export function ProductsPageContainer() {
 	const searchParams = useSearchParams()
 

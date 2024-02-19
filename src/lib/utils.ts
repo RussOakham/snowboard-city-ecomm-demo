@@ -52,6 +52,12 @@ export function formatPrice(
 	}).format(Number(price))
 }
 
+export function isMacOs() {
+	if (typeof window === 'undefined') return false
+
+	return window.navigator.userAgent.includes('Mac')
+}
+
 export function toTitleCase(str: string) {
 	return str.replace(
 		/\w\S*/g,

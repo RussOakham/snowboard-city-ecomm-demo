@@ -10,7 +10,7 @@ const Home = () => {
 	return (
 		<Shell variant="zero-vertical-padding" className="max-w-6xl">
 			<HeroBannerWithImage
-				imgSrc="/images/snowboard-landscape.jpg"
+				imgSrc="/images/snowboard-landscape.webp"
 				imgAlt="Snowboarder getting big air in front of a mountain skyline"
 			>
 				<h1 className="z-10 text-balance font-heading text-3xl text-border text-white sm:text-5xl md:text-6xl lg:text-7xl">
