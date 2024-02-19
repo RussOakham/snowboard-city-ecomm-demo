@@ -16,6 +16,8 @@ import { Separator } from '@/components/ui/separator'
 import { useGetProductQuery } from '@/lib/react-query/queries/useGetProductQuery'
 import { formatPrice, toTitleCase } from '@/lib/utils'
 
+import { VariantSelector } from './variant-selector'
+
 interface ProductPageContainerProps {
 	params: {
 		productHandle: string
@@ -71,6 +73,12 @@ export function ProductPageContainer({ params }: ProductPageContainerProps) {
 					<div className="flex items-center justify-between">
 						<Rating rating={productRating} />
 					</div>
+					<Separator className="mt-4 md:hidden" />
+					<VariantSelector
+						options={product.options}
+						variants={product.variants}
+					/>
+					<Separator className="mt-4 md:hidden" />
 					<AddToCartForm
 						product={product}
 						availableForSale={product.availableForSale}
