@@ -89,6 +89,7 @@ React Query, which provides a great API for building optimistic data handling. T
 https://github.com/RussOakham/snowboard-city-ecomm-demo/assets/73036915/73e67d26-e9e1-417f-a6fb-6bbb65737eab
 
 In the above example the UI of the in-basket cost is updated immediately upon click, showing instant feedback to the user (Buttons are still disabled until the network response resolves, to avoid any race condition).
+
 Note: This I've situated the server for the deployed demo in India (client in UK), to simulate long network data transfer times.
 
 By using streamed data via React Query, we ensure initial GET calls are made on the server via server functions, ensuring quick initial page loads, while subsequent network calls are managed via React Query and its caching system.
