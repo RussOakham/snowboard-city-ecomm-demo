@@ -5,30 +5,31 @@
 Built with Next 14 App Router, Server Actions, React Query v5, ShadcnUi, TypeScript and Tailwind
 
 [Deployed Site](https://snowboard-city-ecomm-demo.vercel.app/)
+
 Note: Server side deployment is India, to simulate long network transfer times, highlighting power of optimistic UI.
 
 ## Features
 
-- Built with NextJS 14, using latest features:
+- 👷🏻‍♂️  Built with NextJS 14, using latest features:
   - AppRouter
   - React Server Components (RSCs)
   - Server Actions
   - Server Functions
   - Route and API caching.
-- React Query V5 for client-side streamed data fetching, optimistic UI updates and client/server state syncing.
-- Shopify Storefront Api integration:
+- ❓ React Query V5 for client-side streamed data fetching, optimistic UI updates and client/server state syncing.
+- 🛍️ Shopify Storefront Api integration:
   - Custom Fetch server function use for all server calls
   - Custom types for all shopify objects
   - Utilizes Shopify's own checkout functionality.
-- Shadcn/UI primitives for front end components
-- React-Error-Boundary for handling of errors via suspense.
-- t3-oss/env for type safe handling of environment variables
-- react-hook-form for handling of form state
-- zod for validation of user input schemas
-- Axiom for logging
-- Vercel for deployment, preview branches, analytics and speed insights
-- Customized eslint and prettier rules for strict type safety and consistent formatting.
-- 100% Written in TypeScript for End-to-End type safety
+- 🌅 Shadcn/UI primitives for front end components
+- 🚫 React-Error-Boundary for handling of errors via suspense.
+- 🔐 t3-oss/env for type safe handling of environment variables
+- 📋 react-hook-form for handling of form state
+- 🌋 zod for validation of user input schemas
+- 👀 Axiom for logging
+- 🚧 Vercel for deployment, preview branches, analytics and speed insights
+- 🤓 Customized eslint and prettier rules for strict type safety and consistent formatting.
+- 🏦 100% Written in TypeScript for End-to-End type safety
 
 ### Getting Started
 
@@ -62,14 +63,15 @@ Some great examples of this new architecture have already been built and shared 
 
 Vercel release their "E-Commerce 2.0" demo, which is built entirely with native NextJS 14 functionality for RSCs, server actions and functions, Sadmann7 built a skateshop demo using the same architecture and using Shadcn/ui for its frontend componentary.
 
-Vercel E-Commerce 2.0:
-[E-Commerce 2.0 - Demo](https://demo.vercel.store/)
-[E-Commerce 2.0 - Repo](https://github.com/vercel/commerce)
+**Vercel E-Commerce 2.0:**
 
-Skateshop:
+- [E-Commerce 2.0 - Demo](https://demo.vercel.store/)
+- [E-Commerce 2.0 - Repo](https://github.com/vercel/commerce)
 
-[Skateshop - Demo](https://skateshop.sadmn.com/)
-[Skateshop - Repo](https://github.com/sadmann7/skateshop)
+**Skateshop:**
+
+- [Skateshop - Demo](https://skateshop.sadmn.com/)
+- [Skateshop - Repo](https://github.com/sadmann7/skateshop)
 
 Both show the power of server-side fetching to ensure fast immediate load speeds, aggressive caching, so once a required `GET` call has been made, subsequent use of that data is served immediately from the cache (eliminating repeated loading spinners) and the reduction in code complexity due to the new framework abstractions.
 
@@ -95,7 +97,7 @@ By using streamed data via React Query, we ensure initial GET calls are made on 
 
 [React Query Docs - Experimental streaming without prefetching in Next.js](https://tanstack.com/query/latest/docs/framework/react/guides/advanced-ssr#experimental-streaming-without-prefetching-in-nextjs)
 
-Converting a server function to React Query via `useSuspenseQuery` hook:
+**Converting a server function to React Query via `useSuspenseQuery` hook:**
 
 To obtain optimistic user interfaces, you need to manually augment the cached data React Query holds to mimic the how a successful response would resolve. You can see an example of how this is managed in the below code:
 
