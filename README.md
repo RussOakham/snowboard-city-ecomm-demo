@@ -78,7 +78,7 @@ Both show the power of server-side fetching to ensure fast immediate load speeds
 While I loved these approaches, I felt one area could be improved, mutations. Any data which needs an stale-time time of 0, cannot be served from a cache, so must be served fresh from the server each time. Causing a slow laggy feel to the UX while data makes it round trip journey to the server, database and back.
 In the above projects, the main place you can see this in when updating the cart.
 
-[Vercel E-Commerce 2.0 Cart](./src/assets/videos/vercel-ecommerce-cart.mov)
+https://github.com/RussOakham/snowboard-city-ecomm-demo/assets/73036915/30fc3982-f327-4739-ac71-cca35e6f6f11
 
 While this can be reduced by ensuring your server is a close to the client as possible (CDN distributed edge runtimes), its always going to be an issue for customers, especially for those on slow connections (3G / 4G countryside etc.).
 
@@ -86,7 +86,7 @@ So how to counter this? Optimistic updates.
 
 React Query, which provides a great API for building optimistic data handling. They also recently released an experimental feature to allow its use with server actions, via streamed data fetching. So I decided to build this project to clone the vercel e-commerce 2.0 approach, but improve on it via adding optimistic UI via React Query.
 
-[Snowboard City Cart](./src/assets//videos/snowboard-city-cart.mov)
+https://github.com/RussOakham/snowboard-city-ecomm-demo/assets/73036915/73e67d26-e9e1-417f-a6fb-6bbb65737eab
 
 In the above example the UI of the in-basket cost is updated immediately upon click, showing instant feedback to the user (Buttons are still disabled until the network response resolves, to avoid any race condition).
 Note: This I've situated the server for the deployed demo in India (client in UK), to simulate long network data transfer times.
@@ -98,6 +98,8 @@ By using streamed data via React Query, we ensure initial GET calls are made on 
 [React Query Docs - Experimental streaming without prefetching in Next.js](https://tanstack.com/query/latest/docs/framework/react/guides/advanced-ssr#experimental-streaming-without-prefetching-in-nextjs)
 
 **Converting a server function to React Query via `useSuspenseQuery` hook:**
+
+https://github.com/RussOakham/snowboard-city-ecomm-demo/assets/73036915/3da64b32-22cb-4171-805d-ef396523422d
 
 To obtain optimistic user interfaces, you need to manually augment the cached data React Query holds to mimic the how a successful response would resolve. You can see an example of how this is managed in the below code:
 
